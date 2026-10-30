@@ -2159,6 +2159,9 @@ async function createCaelScene() {
   if ( !page ) return ui.notifications.warn(`Manca la pagina «${CAEL_PAGE}»: ${rebuildHint(7)}`);
   const { nodes, size } = await caelMap();
   let scene = game.scenes.find(s => s.getFlag(MODULE_ID, "scene") === CAEL_SCENE_FLAG);
+  if ( scene?.getFlag(MODULE_ID, "locked") ) {
+    return ui.notifications.warn(`La scena «${scene.name}» è bloccata: sbloccala per rifare le note.`);
+  }
   if ( scene ) {
     const ok = await foundry.applications.api.DialogV2.confirm({
       window: { title: CAEL_SCENE_NAME },
@@ -2187,6 +2190,26 @@ async function createCaelScene() {
     flags: { [MODULE_ID]: { area: n.code, heading: nodeTitle(n) } }
   })));
   ui.notifications.info(`Scena «${scene.name}»: ${nodes.length} note sui punti.`);
+  return scene;
+}
+
+/**
+ * Blocca o sblocca una scena: gli script del remix (scenefix, createCaelScene) non toccano le scene bloccate,
+ * così i ritocchi fatti a mano su note e token restano.
+ * @param {boolean} locked
+ * @param {Scene} [scene]      Di default la scena che stai guardando.
+ */
+async function lockScene(locked, scene = canvas.scene) {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può bloccare le scene.");
+  if ( !scene ) return ui.notifications.warn("Nessuna scena aperta.");
+  if ( !!scene.getFlag(MODULE_ID, "locked") === locked ) {
+    return ui.notifications.info(`La scena «${scene.name}» è già ${locked ? "bloccata" : "sbloccata"}.`);
+  }
+  if ( locked ) await scene.setFlag(MODULE_ID, "locked", true);
+  else await scene.unsetFlag(MODULE_ID, "locked");
+  ui.notifications.info(locked
+    ? `Scena «${scene.name}» bloccata: gli script del remix non la toccano più.`
+    : `Scena «${scene.name}» sbloccata.`);
   return scene;
 }
 
@@ -2224,7 +2247,9 @@ const MACROS = [
   ["Netherdeep: epilogo", "27-netherdeep-epilogo.js", "icons/magic/light/explosion-star-glow-silhouette.webp"],
   ["Remix: crea il diario del blocco 9", "28-crea-diario-blocco9.js", "icons/sundries/books/book-symbol-triangle-silver-blue.webp"],
   ["Attiva incontro", "29-attiva-incontro.js", "icons/skills/melee/weapons-crossed-swords-yellow.webp"],
-  ["Cael Morrow: crea la scena a punti", "30-crea-scena-cael-morrow.js", "icons/environment/wilderness/wall-ruins.webp"]
+  ["Cael Morrow: crea la scena a punti", "30-crea-scena-cael-morrow.js", "icons/environment/wilderness/wall-ruins.webp"],
+  ["Blocca scena", "31-blocca-scena.js", "icons/sundries/misc/lock-steel-blue.webp"],
+  ["Sblocca scena", "32-sblocca-scena.js", "icons/sundries/misc/lock-open-yellow.webp"]
 ];
 
 async function fetchText(path) {
@@ -2279,7 +2304,7 @@ Hooks.once("init", () => {
     CLOCK_OWNERS, contests, getFactionState, clocksReport, advanceClock, factionTurn, promptFactionTurn, promptFactionClocks,
     RIVALS, CHOICES, memories, epilogues, getNetherState, apotheonMemory, promptApotheonMemory, checkMemoryOrder,
     memoryOrderReport, promptMemoryState, rivalsFinale, promptRivalsFinale, netherdeepEpilogue, promptNetherdeepEpilogue,
-    activateEncounter, promptActivateEncounter, createCaelScene
+    activateEncounter, promptActivateEncounter, createCaelScene, lockScene
   };
 });
 
