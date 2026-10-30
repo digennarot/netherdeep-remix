@@ -2003,7 +2003,7 @@ async function createJournal(name, pages, { tables } = {}) {
   for ( const [, file] of pages ) {
     if ( file in DYNAMIC_PAGES ) await inNetherQueue(() => refreshDynamicPage(file));
   }
-  entry.sheet.render(true);
+  entry.sheet.render({ force: true });
   return entry;
 }
 
@@ -2275,15 +2275,19 @@ async function installMacros() {
       if ( existing.command !== command ) changes.command = command;
       if ( existing.name !== name ) changes.name = name;
       if ( existing.img !== img ) changes.img = img;
-      // solo il default: i permessi dati a mano ai singoli giocatori restano
-      if ( existing.ownership.default !== access ) changes["ownership.default"] = access;
+      // Il default si impone solo quando cambia quello voluto dal modulo (flag access): se poi il GM lo cambia
+      // a mano, resta. I permessi dati ai singoli giocatori non si toccano mai.
+      if ( existing.getFlag(MODULE_ID, "access") !== access ) {
+        changes["ownership.default"] = access;
+        changes[`flags.${MODULE_ID}.access`] = access;
+      }
       if ( !foundry.utils.isEmpty(changes) ) await existing.update(changes);
       continue;
     }
     await Macro.implementation.create({
       name, img, command, type: "script", folder: folder.id,
       ownership: { default: access },
-      flags: { [MODULE_ID]: { file } }
+      flags: { [MODULE_ID]: { file, access } }
     });
   }
 }
