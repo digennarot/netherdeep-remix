@@ -1,5 +1,6 @@
 {
   "start": "M1",
+  "size": { "width": 1400, "height": 920 },
   "factions": {
     "allegiance": { "short": "All.", "name": "Allegiance of Allsight", "color": "#d68910" },
     "consortium": { "short": "Cons.", "name": "Consortium of the Vermilion Dream", "color": "#c0392b" },

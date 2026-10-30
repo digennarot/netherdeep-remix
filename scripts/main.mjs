@@ -820,11 +820,16 @@ function pathHours(p, from, type, { noSwim }) {
   return (noSwim && (type === "sommerso")) ? hours * 2 : hours;
 }
 
+/** La pagina «Mappa a punti di Cael Morrow» del blocco 7, se il diario esiste. */
+const caelPage = () => modulePage("28-mappa-a-punti.html");
+
+/** Il titolo di un punto nella pagina «Mappa a punti»: link e note della scena puntano lì. */
+const nodeTitle = node => `${node.code}: ${node.name}`;
+
 /** Link alla descrizione di un punto nella pagina «Mappa a punti», se il diario del blocco 7 esiste. */
 function nodeLink(node) {
-  const title = `${node.code}: ${node.name}`;
-  const entry = moduleJournal(CAEL_JOURNAL);
-  const page = entry?.pages.getName(CAEL_PAGE);
+  const title = nodeTitle(node);
+  const page = caelPage();
   if ( !page ) return title;
   return `@UUID[${page.uuid}#${foundry.documents.JournalEntryPage.slugifyHeading(title)}]{${title}}`;
 }
@@ -2024,6 +2029,168 @@ async function updateJournalPages(entry, data, entryChanges) {
 }
 
 /* -------------------------------------------- */
+/*  Blocco 10: scene, note e incontri           */
+/* -------------------------------------------- */
+
+/**
+ * Le note delle aree portano il titolo che devono aprire (flag heading, per esempio «E3: Bivio nella caverna»),
+ * scelto quando la nota è stata creata: qui basta trasformarlo nell'ancora, con la stessa regola dell'indice.
+ */
+function onActivateNote(note, options) {
+  const heading = note.document.getFlag(MODULE_ID, "heading");
+  if ( heading && note.document.page ) options.anchor = foundry.documents.JournalEntryPage.slugifyHeading(heading);
+}
+
+/** Aspetta il prossimo clic sinistro sulla mappa e ne restituisce la posizione. Esc o un cambio di scena annullano. */
+function pickCanvasPoint() {
+  return new Promise(resolve => {
+    const stage = canvas.stage;
+    const done = point => {
+      stage.off("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey, true);
+      Hooks.off("canvasTearDown", onTearDown);
+      resolve(point);
+    };
+    const onDown = event => { if ( event.button === 0 ) done(event.getLocalPosition(stage)); };
+    const onKey = event => {
+      if ( event.key !== "Escape" ) return;
+      event.stopPropagation(); // l'Esc annulla solo la scelta, non chiude finestre né deseleziona
+      done(null);
+    };
+    const onTearDown = () => done(null);
+    stage.on("pointerdown", onDown);
+    document.addEventListener("keydown", onKey, true);
+    Hooks.on("canvasTearDown", onTearDown);
+  });
+}
+
+/**
+ * Fa partire un incontro sulla scena attuale: rivela i token, li mette nel combattimento della scena
+ * (creato se manca), aggiunge se richiesto i personaggi giocanti e tira l'iniziativa dei PNG.
+ * @param {TokenDocument[]} tokens
+ * @param {object} [options]
+ * @param {boolean} [options.reveal=true]       Rende visibili i token nascosti.
+ * @param {boolean} [options.addPCs=true]       Aggiunge anche i token dei giocatori presenti sulla scena.
+ * @param {boolean} [options.rollNPCs=true]     Tira l'iniziativa dei PNG appena aggiunti.
+ */
+async function activateEncounter(tokens, { reveal = true, addPCs = true, rollNPCs = true } = {}) {
+  const scene = canvas.scene;
+  if ( !tokens.length ) return ui.notifications.warn("Nessun token da attivare.");
+  const hidden = tokens.filter(t => t.hidden);
+  // Il combattimento in corso su questa scena; quelli vecchi o non attivi restano dove sono.
+  // (game.combat no: è quello che il tracker mostra, anche se vecchio e non attivo)
+  const [combat] = await Promise.all([
+    game.combats.find(c => c.active && (c.scene?.id === scene.id)) ?? Combat.implementation.create({ scene: scene.id, active: true }),
+    (reveal && hidden.length) ? scene.updateEmbeddedDocuments("Token", hidden.map(t => ({ _id: t.id, hidden: false }))) : null
+  ]);
+  const fighting = new Set(combat.combatants.map(c => c.tokenId));
+  const selected = new Set(tokens);
+  const foes = tokens.filter(t => !fighting.has(t.id));
+  const pcs = addPCs ? scene.tokens.filter(t => t.actor?.hasPlayerOwner && !selected.has(t) && !fighting.has(t.id)) : [];
+  // Il combattente eredita hidden dal token: senza rivelare, resta nascosto anche nel tracker dei giocatori.
+  const created = await TokenDocument.implementation.createCombatants([...foes, ...pcs], { combat });
+  const npcs = created.filter(c => c.isNPC && (c.initiative === null));
+  if ( rollNPCs && npcs.length ) await combat.rollInitiative(npcs.map(c => c.id), { messageMode: "gm" });
+  const names = Object.entries(Object.groupBy(tokens, t => t.name))
+    .map(([n, l]) => esc(n) + (l.length > 1 ? ` ×${l.length}` : ""));
+  await whisperGM(`<h3>Incontro attivato</h3><p>${names.join(", ")}</p>`
+    + `<p><em>${reveal ? `Rivelati ${hidden.length}. ` : ""}Nel combattimento: ${foes.length} nuovi`
+    + `${pcs.length ? `, più ${pcs.length} personaggi giocanti` : ""}.</em></p>`);
+  return combat;
+}
+
+/** Raggio proposto, in quadretti, quando l'incontro si sceglie cliccando sulla mappa. */
+const ENCOUNTER_RADIUS = 8;
+
+/**
+ * Macro «Attiva incontro»: usa i token selezionati; senza selezione chiede di cliccare il centro dell'area
+ * e prende i token nascosti entro il raggio scelto.
+ */
+async function promptActivateEncounter() {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può attivare un incontro.");
+  if ( !canvas.scene ) return ui.notifications.warn("Apri prima una scena.");
+  let tokens = canvas.tokens.controlled.map(t => t.document);
+  const pickArea = !tokens.length;
+  const intro = pickArea
+    ? `<p>Nessun token selezionato: dopo aver confermato, clicca sulla mappa al centro dell'area (Esc annulla).</p>
+      <div class="form-group"><label>Raggio (quadretti)</label><div class="form-fields">
+        <input type="number" name="radius" value="${ENCOUNTER_RADIUS}" min="1" max="60" step="1"></div></div>`
+    : `<p>Uso i <strong>${tokens.length}</strong> token selezionati.</p>`;
+  const data = await foundry.applications.api.DialogV2.input({
+    window: { title: "Attiva incontro" },
+    content: `${intro}
+      <div class="form-group"><label>Rivela i token nascosti</label><input type="checkbox" name="reveal" checked></div>
+      <div class="form-group"><label>Aggiungi i personaggi giocanti</label><input type="checkbox" name="addPCs" checked></div>
+      <div class="form-group"><label>Tira l'iniziativa dei PNG</label><input type="checkbox" name="rollNPCs" checked></div>`,
+    ok: { label: pickArea ? "Scegli l'area" : "Attiva" }
+  });
+  if ( !data ) return;
+  if ( pickArea ) {
+    ui.notifications.info("Clicca sulla mappa al centro dell'area dell'incontro.");
+    const point = await pickCanvasPoint();
+    if ( !point ) return;
+    const radius = (Number(data.radius) || ENCOUNTER_RADIUS) * canvas.grid.size;
+    tokens = canvas.scene.tokens.filter(t => {
+      if ( !t.hidden ) return false;
+      const c = t.getCenterPoint();
+      return Math.hypot(c.x - point.x, c.y - point.y) <= radius;
+    });
+    if ( !tokens.length ) return ui.notifications.warn("Nessun token nascosto in quel raggio.");
+    canvas.tokens.releaseAll();
+    for ( const t of tokens ) t.object?.control({ releaseOthers: false });
+  }
+  return activateEncounter(tokens, { reveal: !!data.reveal, addPCs: !!data.addPCs, rollNPCs: !!data.rollNPCs });
+}
+
+// La mappa del GM ha width/height doppi del viewBox: la scena la ridimensiona a size (cael-morrow.json)
+// e resta nitida anche ingrandita. Le coordinate dei punti sono nel viewBox, cioè già in coordinate di scena.
+const CAEL_SCENE_IMG = `modules/${MODULE_ID}/img/cael-morrow-gm.svg`;
+const CAEL_SCENE_NAME = "Cael Morrow: mappa a punti";
+const CAEL_SCENE_FLAG = "cael-morrow";
+const CAEL_NOTE_OFFSET = 22; // icona in alto a destra del cerchio, così il codice disegnato resta leggibile
+
+/**
+ * Crea (o aggiorna) la scena «Cael Morrow: mappa a punti» con una nota per ogni punto del pointcrawl.
+ * Ogni nota apre la pagina «Mappa a punti di Cael Morrow» del blocco 7 sul titolo del punto.
+ */
+async function createCaelScene() {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può creare la scena.");
+  const page = caelPage();
+  if ( !page ) return ui.notifications.warn(`Manca la pagina «${CAEL_PAGE}»: ${rebuildHint(7)}`);
+  const { nodes, size } = await caelMap();
+  let scene = game.scenes.find(s => s.getFlag(MODULE_ID, "scene") === CAEL_SCENE_FLAG);
+  if ( scene ) {
+    const ok = await foundry.applications.api.DialogV2.confirm({
+      window: { title: CAEL_SCENE_NAME },
+      content: "<p>La scena esiste già. Aggiorno la mappa e rifaccio le note dei punti (le altre note restano)?</p>"
+    });
+    if ( !ok ) return;
+    await scene.update(size);
+  }
+  else {
+    const folder = game.folders.find(f => (f.type === "Scene") && f.name.startsWith("Capitolo 5"));
+    scene = await Scene.implementation.create({
+      name: CAEL_SCENE_NAME, folder: folder?.id ?? null, navigation: false, ...size, padding: 0,
+      grid: { type: CONST.GRID_TYPES.GRIDLESS, size: 100 },
+      tokenVision: false, fog: { exploration: false },
+      journal: page.parent.id, journalEntryPage: page.id,
+      flags: { [MODULE_ID]: { scene: CAEL_SCENE_FLAG } }
+    });
+  }
+  // In v14 lo sfondo sta sul livello della scena: il vecchio campo background in create viene ignorato.
+  await scene.levels.contents[0]?.update({ background: { src: CAEL_SCENE_IMG, color: "#050d16" } });
+  const old = scene.notes.filter(n => n.getFlag(MODULE_ID, "area")).map(n => n.id);
+  if ( old.length ) await scene.deleteEmbeddedDocuments("Note", old);
+  await scene.createEmbeddedDocuments("Note", nodes.map(n => ({
+    entryId: page.parent.id, pageId: page.id, x: n.x + CAEL_NOTE_OFFSET, y: n.y - CAEL_NOTE_OFFSET,
+    text: nodeTitle(n), iconSize: 32, texture: { src: "icons/svg/book.svg" },
+    flags: { [MODULE_ID]: { area: n.code, heading: nodeTitle(n) } }
+  })));
+  ui.notifications.info(`Scena «${scene.name}»: ${nodes.length} note sui punti.`);
+  return scene;
+}
+
+/* -------------------------------------------- */
 /*  Installazione nel mondo                     */
 /* -------------------------------------------- */
 
@@ -2055,7 +2222,9 @@ const MACROS = [
   ["Netherdeep: i ricordi visti", "25-netherdeep-ricordi-visti.js", "icons/sundries/documents/document-sealed-brown-red.webp"],
   ["Netherdeep: rivali al finale", "26-netherdeep-rivali.js", "icons/skills/social/intimidation-impressing.webp"],
   ["Netherdeep: epilogo", "27-netherdeep-epilogo.js", "icons/magic/light/explosion-star-glow-silhouette.webp"],
-  ["Remix: crea il diario del blocco 9", "28-crea-diario-blocco9.js", "icons/sundries/books/book-symbol-triangle-silver-blue.webp"]
+  ["Remix: crea il diario del blocco 9", "28-crea-diario-blocco9.js", "icons/sundries/books/book-symbol-triangle-silver-blue.webp"],
+  ["Attiva incontro", "29-attiva-incontro.js", "icons/skills/melee/weapons-crossed-swords-yellow.webp"],
+  ["Cael Morrow: crea la scena a punti", "30-crea-scena-cael-morrow.js", "icons/environment/wilderness/wall-ruins.webp"]
 ];
 
 async function fetchText(path) {
@@ -2109,9 +2278,12 @@ Hooks.once("init", () => {
     ALERT_LEVELS, caelMap, getCaelState, caelTravel, promptCaelTravel, caelReport, promptCaelControl,
     CLOCK_OWNERS, contests, getFactionState, clocksReport, advanceClock, factionTurn, promptFactionTurn, promptFactionClocks,
     RIVALS, CHOICES, memories, epilogues, getNetherState, apotheonMemory, promptApotheonMemory, checkMemoryOrder,
-    memoryOrderReport, promptMemoryState, rivalsFinale, promptRivalsFinale, netherdeepEpilogue, promptNetherdeepEpilogue
+    memoryOrderReport, promptMemoryState, rivalsFinale, promptRivalsFinale, netherdeepEpilogue, promptNetherdeepEpilogue,
+    activateEncounter, promptActivateEncounter, createCaelScene
   };
 });
+
+Hooks.on("activateNote", onActivateNote);
 
 Hooks.once("ready", async () => {
   if ( game.users.activeGM !== game.user ) return;

@@ -2,7 +2,7 @@
   "id": "netherdeep-remix",
   "title": "Call of the Netherdeep: remix",
   "description": "Remix di Call of the Netherdeep (dalle note di Justin Alexander) per Foundry VTT: diari in italiano, tabelle e macro per rivali, Jigow, Cael Morrow, fazioni e Netherdeep, con corruzione da ruidium automatizzata.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [
     {
       "name": "digennarot",
@@ -29,5 +29,5 @@
   ],
   "url": "https://github.com/digennarot/netherdeep-remix",
   "manifest": "https://github.com/digennarot/netherdeep-remix/releases/latest/download/module.json",
-  "download": "https://github.com/digennarot/netherdeep-remix/releases/download/v1.0.0/module.zip"
+  "download": "https://github.com/digennarot/netherdeep-remix/releases/download/v1.1.0/module.zip"
 }
