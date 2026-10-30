@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "REMIXJIGOWVITA01",
+    "name": "Jigow in movimento",
+    "formula": "1d8",
+    "description": "Che cosa incrociano i personaggi mentre attraversano Jigow.",
+    "results": [
+      "Un forno su una tartaruga attraversa la strada a passo lento. Il fornaio lancia pagnotte ancora calde a chi paga al volo, e chi sbaglia la mira se la vede rotolare in un fosso.",
+      "Due horizonback si incastrano a un incrocio. I proprietari litigano da un dorso all'altro su chi deve cedere il passo, mentre la folla scommette sul vincitore.",
+      "Una passerella cala davanti ai personaggi: tre tartarughe si sono unite per una festa di nozze. Gli sposi invitano chiunque passi, purché porti un regalo o una canzone.",
+      "Un cucciolo di horizonback grande come un carretto si è perso e segue i personaggi come un cane. Una bambina goblin in lacrime lo sta cercando due strade più in là.",
+      "Una casa su palafitte dei Wetwalks viene smontata e caricata, asse per asse, sul dorso di una tartaruga. «Ci spostiamo dove pescano meglio», spiega la famiglia.",
+      "Una taverna galleggiante, il Crooked Tail, accosta per far scendere i clienti. Il taverniere orco offre ai personaggi un passaggio per l'altra parte del Jumble al prezzo di un boccale.",
+      "Un mercante di stoffe passa sul dorso della sua tartaruga con le pezze appese ad asciugare come bandiere. Chi le guarda bene nota che qualcuno ci ha nascosto in mezzo un tagliaborse.",
+      "Le tracce profonde di una tartaruga gigante solcano il fango della strada. La gente del posto le scavalca senza farci caso; i forestieri ci inciampano."
+    ]
+  },
+  {
+    "_id": "REMIXFESTVOCI001",
+    "name": "Voci del festival",
+    "formula": "1d10",
+    "description": "Argomenti di conversazione per il Festival del Merito. I risultati 1-3 sono indizi della grande finale.",
+    "results": [
+      "«Stasera al tramonto gli anziani scelgono le due squadre migliori. Solo quelle entrano nell'Emerald Grotto.» (indizio della finale)",
+      "«L'Occhio di Smeraldo è là sotto da prima che mia nonna nascesse. Chi lo riporta su diventa Campione del Merito per un anno intero.» (indizio della finale)",
+      "«La grotta si riempie d'acqua con la marea. Quest'anno qualcuno giura di aver visto un'ombra grossa come una barca, laggiù.» (indizio della finale)",
+      "«I pescatori trovano pietre rosse nelle reti. Brillano al buio. Mio cugino dice che portano fortuna, mia moglie dice che le butterebbe nel fiume.» (ruidium)",
+      "«Le pattuglie dell'Aurora Watch lungo lo Xhorhas sono raddoppiate. Dicono che a Bazzoxan stia succedendo qualcosa, ma nessuno sa cosa.» (Xhorhas)",
+      "«Maryl Bronzefang non perde a braccio di ferro da tre festival. Quest'anno però c'è un'ogre grossa come un armadio che vuole sfidarla.»",
+      "«Agathe Silverspoon ha messo del peperoncino dei Wetwalks nei pasticci. Lo fa apposta: vuole vedere chi piange per primo.»",
+      "«Quella genasi dalla pelle blu ha fermato da sola una rissa sui moli. Non so chi sia, ma io starei dalla sua parte.»",
+      "«Il Caposquadra Mirimm non sopporta il festival. Ogni anno manda una lettera alla capitale per farlo vietare, e ogni anno la lettera si perde.»",
+      "«Il vecchio Colbu Kaz ha passato tutto l'inverno a inventare indovinelli. Mia figlia giura che uno non ha risposta.»"
+    ]
+  }
+]

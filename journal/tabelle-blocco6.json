@@ -1,0 +1,58 @@
+[
+  {
+    "_id": "REMIXRIVALIRISE1",
+    "name": "Rivali nel Betrayers' Rise",
+    "formula": "1d8",
+    "description": "Dove e come i personaggi incontrano i rivali dentro il Betrayers' Rise, quando i rivali sono lì per conto loro. La macro «Betrayers' Rise: i rivali» pesca solo i risultati adatti alla modalità scelta.",
+    "results": [
+      {
+        "text": "Sul ponte di R1, all'uscita. I rivali non sono riusciti a entrare e aspettano seduti sui loro zaini. Vogliono sapere che cosa c'è dentro, o vogliono il Gioiello, a seconda di come stanno le cose.",
+        "modes": ["own", "take"]
+      },
+      {
+        "text": "In R2, tra i resti delle bocche gorgoglianti. Hanno passato la porta dietro ai personaggi prima che si chiudesse e li seguono sulle loro tracce. Si fanno vedere solo quando serve, o quando qualcuno li scopre.",
+        "modes": ["follow", "take"]
+      },
+      {
+        "text": "In R3, davanti alla nicchia nord-ovest. Uno dei rivali ha fatto pace con la propria morte ed è passato nel muro. Gli altri litigano su chi debba seguirlo, e chiedono aiuto ai personaggi.",
+        "modes": ["follow", "own"]
+      },
+      {
+        "text": "Una parete che si apre per un attimo: le due versioni del Rise si toccano. Dall'altra parte i rivali combattono qualcosa che i personaggi non vedono. Un attimo per decidere se tendere una mano o lasciarli lì.",
+        "modes": ["follow", "own", "take"]
+      },
+      {
+        "text": "In R8, nella stanzetta segreta. I rivali hanno trovato la biblioteca prima dei personaggi e uno di loro ha in mano la cronaca dei Barbed Fields. Non vuole darla, ma la legge ad alta voce volentieri.",
+        "modes": ["own", "take"]
+      },
+      {
+        "text": "In R12, sotto la statua lamentosa. Uno dei rivali è maledetto dalla fame di Torog e attacca i compagni. Gli altri cercano di tenerlo fermo senza fargli male.",
+        "modes": ["follow", "own"]
+      },
+      {
+        "text": "In R15, nel baratro nebbioso. Si sono calati con le corde di Dermot e una corda si è spezzata. Uno di loro è appeso nella nebbia, con le voci del baratro che gli sussurrano di lasciarsi andare.",
+        "modes": ["follow", "own"]
+      },
+      {
+        "text": "Sul bordo del cratere di R16, quando la visione finisce. Come nel libro: ci sono arrivati da un'altra strada, e hanno visto tutto.",
+        "modes": ["own", "take"]
+      }
+    ]
+  },
+  {
+    "_id": "REMIXTRAVERSATA1",
+    "name": "Traversata del Betrayers' Rise",
+    "formula": "1d8",
+    "description": "Tappe del montaggio quando una guida porta i personaggi attraverso il Rise fino alla Cisti di Avandra. Spazi enormi e vuoti: pericoli da evitare più che mostri da combattere.",
+    "results": [
+      "Una galleria si affaccia su un baratro sconfinato, illuminato da un lago di fuoco. Su un'isola, in mezzo al lago, un balor dorme disteso su una lastra di pietra. Meglio non svegliarlo.",
+      "Una sala piena di candele che tremolano senza vento. Le ombre dei personaggi restano un passo indietro rispetto a loro. Bisogna non fermarsi e non voltarsi: se qualcuno si volta, le ombre diventano demoni ombra, uno per personaggio.",
+      "Un colosseo sepolto, con le gradinate che salgono nel buio. Sulla sabbia dell'arena ci sono impronte fresche e tre incubi che discutono a bassa voce. Si può aggirare l'arena dalle gradinate, in silenzio (prova di Destrezza (Furtività) di gruppo con CD 13).",
+      "Un fiume acido taglia in due una caverna. L'unico guado è una fila di pietre, e tre di quelle pietre sono roper. La guida (o gli appunti) giura che si passa sulle pietre chiare. Non è vero per tutte.",
+      "Un corridoio lunghissimo coperto di ragnatele, con un ragno gigante che zampetta in fondo. Solo dopo un po' ci si accorge che ha la faccia di un drow: è uno yochlol, e vuole sapere dove state andando.",
+      "Un soldato dell'Aurora Watch, con l'armatura insettoide, si avvicina zoppicando: si è perso e vuole tornare in superficie. È uno yochlol travestito, e indica una scorciatoia che porta a qualcosa di molto peggio.",
+      "Un lampadario enorme, grande come una casa, pende sopra una sala vuota. Ronza. Dentro c'è un alveare di chasme. Si passa sotto senza fare rumore, o si corre.",
+      "Una sala dorata e calda, con un glabrezu seduto su un trono di monete. Saluta per nome lo studioso che fa da guida, o quello a cui avete rubato gli appunti, e offre ricchezze a chi vuole servirlo. Chi rifiuta, o chi non riesce a comprare, deve combattere."
+    ]
+  }
+]

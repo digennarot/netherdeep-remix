@@ -1,0 +1,82 @@
+[
+  {
+    "id": "elefante",
+    "name": "La statuetta dell'elefante",
+    "place": "ankharel",
+    "clocks": [
+      { "faction": "allegiance", "name": "L'Allegiance riporta la statuetta al Chateau", "size": 4, "full": "La statuetta è nel caveau dell'Emerald Ibis Relic Hall. Da qui parte «L'elefante nella stanza»." },
+      { "faction": "consortium", "name": "Il Consortium si prende la statuetta", "size": 6, "full": "La statuetta è al First Eclipse. Khelkur la usa per i suoi esperimenti: due elefanti di ruidium si scatenano nel Suncut Bazaar («Elefanti scatenati»)." },
+      { "faction": "sentinels", "name": "I Sentinels fanno sparire la statuetta", "size": 6, "full": "Gli assassini dei Sentinels hanno preso la statuetta e l'hanno gettata nelle Fauci. Nessuno la rivedrà, a meno di trovarla a Cael Morrow." }
+    ]
+  },
+  {
+    "id": "ingresso",
+    "name": "L'altro ingresso",
+    "place": "ankharel",
+    "clocks": [
+      { "faction": "allegiance", "name": "L'Allegiance trova il pozzo sotto il River District", "size": 6, "full": "L'Allegiance conosce la cisterna e il Canale del Cielo (P3) e ci mette due guardie. Segnalo con «Cael Morrow: fazioni e allerta»." },
+      { "faction": "consortium", "name": "Il Consortium si fa un ingresso tutto suo", "size": 6, "full": "Il Consortium conosce il Canale del Cielo (P3) e lo usa per entrare senza registrarsi. Il registro di Gortag non serve più a niente." },
+      { "faction": "cobalt", "name": "Il Cobalt Soul trova il «pozzo che respira»", "size": 4, "full": "Il Cobalt Soul conosce il Canale del Cielo (P3): ha un suo ingresso a Cael Morrow, e non deve più chiedere niente a Insight." },
+      { "faction": "sentinels", "name": "I Sentinels fanno crollare la cisterna", "size": 8, "full": "La cisterna è crollata: il Canale del Cielo si raggiunge solo da sotto, da Cael Morrow. Chi c'era dentro è sepolto." }
+    ]
+  },
+  {
+    "id": "spada",
+    "name": "La spada di Kruuk",
+    "place": "ankharel",
+    "clocks": [
+      { "faction": "consortium", "name": "Ashann compra la spada (conto alla rovescia)", "size": 3, "full": "La spada è del Consortium. Ashann la porta al First Eclipse, e il libro mastro di Kruuk resta nella cassetta." },
+      { "faction": "cobalt", "name": "Il Cobalt Soul trova le prove contro Kruuk", "size": 4, "full": "Le Hands of Ord arrestano Kruuk. Il Cobalt Soul ha il suo libro mastro: tre pezzi «dalla professoressa»." },
+      { "faction": "allegiance", "name": "L'Allegiance rivuole un campione di ruidium", "size": 6, "full": "L'Allegiance ha la spada, e la studia al Crystal Chateau. Cryon capisce che apre lo Squarcio, e non lo dice ad Alakritos." }
+    ]
+  },
+  {
+    "id": "talpa",
+    "name": "La talpa nell'Allegiance",
+    "place": "ankharel",
+    "clocks": [
+      { "faction": "sentinels", "name": "Lymmle incastra Prolix", "size": 4, "full": "Prolix è cacciato dall'Allegiance e Lymmle prende il suo posto: da ora decide lei chi scende a Cael Morrow. L'allerta di Cael Morrow sale di 1." },
+      { "faction": "consortium", "name": "Il Consortium protegge la sua fonte", "size": 6, "full": "Se Lymmle è stata scoperta, il Consortium la fa scappare: d'ora in poi lavora per Aradrine. Altrimenti il Consortium sa tutto quello che sa l'Allegiance." }
+    ]
+  },
+  {
+    "id": "accesso",
+    "name": "Le chiavi della città",
+    "place": "ankharel",
+    "clocks": [
+      { "faction": "consortium", "name": "Il Consortium ruba il punzone dell'Occhio", "size": 8, "full": "Il Consortium fa i suoi distintivi: le sue squadre entrano a Cael Morrow quando vogliono. L'allerta sale di 1 quando le guardie se ne accorgono." },
+      { "faction": "cobalt", "name": "Il Cobalt Soul si accorda con Insight", "size": 6, "full": "Insight dà al Cobalt Soul tre distintivi e la sua fiducia, in cambio della tavoletta di M10 o di quello che ci è scritto." },
+      { "faction": "allegiance", "name": "L'Allegiance chiude le Fauci", "size": 6, "full": "L'Allegiance porta l'allerta di Cael Morrow a 2 e ritira tutti i distintivi in prestito: chi non è dell'Allegiance resta fuori." }
+    ]
+  },
+  {
+    "id": "chiave",
+    "name": "La Chiave del Netherdeep",
+    "place": "cael",
+    "clocks": [
+      { "faction": "consortium", "name": "Galeokaerda trova la Chiave", "size": 6, "full": "Galeokaerda prende l'ascia bipenne di ruidium nella Villa sulla scogliera (M13) e la porta alla Campana d'aria (P10)." },
+      { "faction": "allegiance", "name": "L'Allegiance smaschera il doppiogiochista", "size": 6, "full": "Galeokaerda è scoperta e uccisa (dai rivali, se lavorano per l'Allegiance). Se aveva la Chiave, ora è al campo base (M3)." },
+      { "faction": "cobalt", "name": "La tavoletta di M10 arriva a Insight", "size": 4, "full": "Insight sa che qualunque arma di ruidium apre lo Squarcio, e lo dice a chi le ha portato la tavoletta." }
+    ]
+  },
+  {
+    "id": "aboleth",
+    "name": "L'aboleth",
+    "place": "cael",
+    "clocks": [
+      { "faction": "consortium", "name": "Il Consortium uccide l'aboleth", "size": 8, "full": "L'aboleth Alyxian è morto. La Foresta di alghe (M11) e il Vivaio (P8) non sono più di nessuno, e gli spawn vagano per la città senza padrone." },
+      { "faction": "cobalt", "name": "Il Cobalt Soul parla con Alyxian", "size": 6, "full": "L'aboleth accetta il Cobalt Soul come alleato contro i «nemici comuni». Chi entra in M11 con un monaco non viene attaccato." },
+      { "faction": "aboleth", "name": "L'ira dell'aboleth", "size": 6, "full": "L'aboleth attacca il campo più vicino al suo territorio con due aboleth spawn. Il campo è distrutto, chi lo controllava lo perde." }
+    ]
+  },
+  {
+    "id": "squarcio",
+    "name": "Lo Squarcio",
+    "place": "cael",
+    "clocks": [
+      { "faction": "allegiance", "name": "Cryon apre lo Squarcio", "size": 6, "full": "Una squadra di Cryon passa dallo Squarcio (M17) e torna con il ruidium. Alakritos lo scopre: l'Allegiance si spacca." },
+      { "faction": "consortium", "name": "Il Consortium raggiunge lo Squarcio", "size": 8, "full": "Il Consortium conosce lo Squarcio (M17) e la strada per arrivarci, e ci mette un campo." },
+      { "faction": "sentinels", "name": "I Sentinels sigillano lo Squarcio", "size": 8, "full": "Lo Squarcio è sigillato. Per riaprirlo serve il Gioiello delle Tre Preghiere allo stato Esaltato nel Tempio del Cuore Arcano (M9)." }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "REMIXNETHRIVAL01",
+    "name": "Il Netherdeep e i rivali",
+    "formula": "1d12",
+    "description": "Tracce dei rivali (1-6) e trucchi dell'Apotheon per dividere i due gruppi (7-9 se i rivali sono amici, 10-12 se sono nemici). La macro «Netherdeep: rivali al finale» pesca solo nella parte giusta. Mai due tracce nella stessa area.",
+    "results": [
+      { "text": "I cadaveri di una o più creature del Netherdeep, uccise dai rivali. Le ferite sono fresche: il sangue sale ancora in fili sottili nell'acqua.", "modes": ["tracce"] },
+      { "text": "Un pezzo d'armatura rotto, contorto e deformato dalla pressione. Dermot lo riconoscerebbe: è suo.", "modes": ["tracce"] },
+      { "text": "Un messaggio di scherno inciso su una parete: i rivali avvertono i personaggi che sono rimasti indietro. Se i rivali sono amichevoli, sotto c'è un disegnino di Irvan.", "modes": ["tracce"] },
+      { "text": "Un'arma, una munizione, una fiala di pozione o un ninnolo perduti o abbandonati.", "modes": ["tracce"] },
+      { "text": "Un quaderno fradicio di Galsariad, aperto su una pagina di appunti: ha cercato di mettere in fila le visioni anche lui, e il suo ordine è diverso da quello dei personaggi.", "modes": ["tracce"] },
+      { "text": "Una frase di Maggie scritta col carbone su una roccia asciutta, a metà tra una poesia e un avvertimento. Parla dell'area successiva, e dice il vero.", "modes": ["tracce"] },
+      { "text": "I personaggi trovano i rivali che si curano le ferite dopo una schermaglia. Ayo li avverte di una minaccia o di un tesoro nell'area successiva, ma l'Apotheon stravolge i luoghi e fa sembrare che Ayo abbia mentito: i personaggi finiscono altrove senza accorgersene. Se tornano sui loro passi, ritrovano l'area già vista.", "modes": ["amici"] },
+      { "text": "L'Apotheon sussurra a Galsariad che i personaggi conoscono segreti del Netherdeep e se li tengono. Galsariad li accusa con amarezza, oppure convince i compagni che uno dei personaggi va preso e interrogato.", "modes": ["amici"] },
+      { "text": "Quando i personaggi stanno per raggiungere un Frammento di Sofferenza, l'Apotheon fa sentire le urla dei rivali da un'altra direzione, e li attira dove li aspetta un pericolo.", "modes": ["amici"] },
+      { "text": "Superata la prova per un Frammento di Sofferenza, i personaggi scoprono che i rivali lo hanno già preso, e hanno lasciato una firma.", "modes": ["nemici"] },
+      { "text": "I rivali escono di corsa dall'area in cui stanno entrando i personaggi, inseguiti da creature affamate. Ayo li vede, strizza l'occhio e lancia passare senza tracce sul suo gruppo: i mostri perdono la preda e si girano verso i nuovi arrivati.", "modes": ["nemici"] },
+      { "text": "Galsariad usa telecinesi per far crollare in parte una galleria. La strada dei personaggi resta chiusa finché non passano 10 minuti a sgomberare le macerie.", "modes": ["nemici"] }
+    ]
+  }
+]

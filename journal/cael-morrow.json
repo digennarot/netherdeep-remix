@@ -1,0 +1,183 @@
+{
+  "start": "M1",
+  "factions": {
+    "allegiance": { "short": "All.", "name": "Allegiance of Allsight", "color": "#d68910" },
+    "consortium": { "short": "Cons.", "name": "Consortium of the Vermilion Dream", "color": "#c0392b" },
+    "cobalt": { "short": "Cob.", "name": "Cobalt Soul", "color": "#2471a3" },
+    "aboleth": { "short": "Abol.", "name": "Aboleth Alyxian", "color": "#7d3c98" },
+    "spiriti": { "short": "Spir.", "name": "Spiriti di Cael Morrow", "color": "#48c9b0" }
+  },
+  "pathTypes": {
+    "galleria": { "name": "Galleria", "encounter": 1 },
+    "segnalato": { "name": "Percorso segnalato", "encounter": 1 },
+    "sommerso": { "name": "Percorso sommerso", "encounter": 2 }
+  },
+  "nodes": [
+    {
+      "id": "M1", "code": "M1-M3", "name": "Il Pozzo e il campo base", "x": 110, "y": 450, "sealedExempt": true,
+      "control": "allegiance", "known": ["allegiance", "consortium", "cobalt"],
+      "text": "<p>La colonna di pietra cava che scende dalle Fauci di Cael Morrow, la sala d'ingresso protetta e il magazzino a tre piani della professoressa Insight Acuere (aree M1, M2 e M3 del capitolo 5). È l'unico ingresso che tutti conoscono, e il cuore della rete di gallerie dell'Allegiance. Qui si controllano i distintivi, si distribuiscono le pozioni di respirare sott'acqua e si registra chi entra e chi esce.</p><p>Il remix rende il campo più adatto ai colpi di mano: vedi la pagina «Accesso a Cael Morrow e sicurezza».</p>"
+    },
+    {
+      "id": "P1", "code": "P1", "name": "Il Molo delle chiavi", "x": 230, "y": 610,
+      "control": "allegiance", "known": ["allegiance"],
+      "text": "<p>Un antico molo fluviale, ora a cento metri sotto il pelo dell'acqua, chiuso in una cupola d'aria. L'Allegiance ci tiene le chiavi di volta di scorta: dodici cubi spenti su rastrelliere di legno, due sempre accesi su un banco da lavoro, dove due incantatori le ricaricano a turno. Sulla parete est c'è una porta di pietra murata con il sigillo personale del Rettore Cryon.</p><p><strong>La porta murata.</strong> Dietro c'è la galleria segreta che porta all'Avamposto della Soglia (P7). Solo Cryon e Insight hanno la parola d'ordine. Per forzare il sigillo serve un incantesimo <em>dissolvi magie</em> (CD 17), e chi lo fa senza la parola d'ordine porta l'allerta a 2.</p><p><strong>Risorsa.</strong> Chi controlla il Molo può costruire nuove gallerie: tre chiavi di volta bastano per un tratto di un intervallo. Rubarne una basta per sabotarne un'altra.</p>"
+    },
+    {
+      "id": "M4", "code": "M4", "name": "Foresteria reale", "x": 330, "y": 330,
+      "control": "allegiance", "known": ["allegiance", "consortium"],
+      "text": "<p>La dimora di pietra bianca degli ospiti di sangue reale (area M4). Nel remix non è più a due passi dal campo base: è il primo snodo della rete, dove la galleria dal Pozzo si divide. Gli scavatori ci fanno sosta per mangiare, seduti sui telai dei letti crollati.</p>"
+    },
+    {
+      "id": "M5a", "code": "M5a", "name": "Torre di guardia fatiscente", "x": 520, "y": 300,
+      "hazard": { "roll": "1d6", "on": 1, "flood": ["M4|M5a", "M5a|M7"], "name": "Chiave di volta di M5a", "text": "La chiave si spacca: i tratti M4-M5a e M5a-M7 diventano percorsi sommersi finché qualcuno non la ripara con una chiave del Molo (rimettili a «galleria» con la macro «Cael Morrow: fazioni e allerta»)." },
+      "control": "allegiance", "known": ["allegiance", "consortium"],
+      "text": "<p>La torre con la chiave di volta difettosa (area M5a), sulla galleria principale verso la Biblioteca Reale. Ogni volta che il gruppo la attraversa, tira 1d6: con 1 la chiave di volta si spacca come descritto nel libro, e i due tratti della galleria tra la Foresteria e la Biblioteca (M4-M5a e M5a-M7) diventano percorsi sommersi finché qualcuno non la ripara con una chiave del Molo. La macro «Cael Morrow: viaggio» tira il dado da sola quando il gruppo arriva alla torre. Lo squalo gigante corrotto gira intorno alla torre.</p><p>Chi controlla la galleria ha tutto l'interesse a ripararla. Chi vuole isolare la Biblioteca ha tutto l'interesse a non farlo.</p>"
+    },
+    {
+      "id": "M6", "code": "M6", "name": "Last Willow Tavern", "x": 200, "y": 210,
+      "control": "", "known": ["allegiance", "consortium"],
+      "text": "<p>La taverna sommersa di Olara (area M6), raggiungibile dalla Foresteria seguendo i lumi d'alga. Olara accoglie tutti, di qualunque fazione, e non permette risse sotto il suo tetto. È il terreno neutro di Cael Morrow: un buon posto per incontrare i rivali o un agente di un'altra fazione.</p><p><strong>Il Canale del Cielo.</strong> Se i personaggi schiariscono la mente di Olara, lei ricorda che ai suoi tempi i ragazzi salivano «a vedere il sole» da un camino nella volta della caverna, dietro la taverna. È il percorso nascosto verso P3.</p>"
+    },
+    {
+      "id": "P2", "code": "P2", "name": "Il Mercato delle Conchiglie", "x": 420, "y": 470,
+      "control": "", "known": ["allegiance"],
+      "text": "<p>Una piazza larga, lastricata di madreperla, con le bancarelle crollate in file ordinate. Il fondo è coperto di monete coniate a Cael Morrow (un personaggio che fruga per 10 minuti ne raccoglie per 2d6 × 10 me). Sul muro del porticato nord, un mosaico mostra elfi e orchi che contrattano sul prezzo dei pesci: gli orchi portano le stesse vesti ricamate degli elfi.</p><p><strong>Lore.</strong> Prima della caduta gli orchi erano cittadini come gli altri, non invasori. I primi orchi di Exandria erano elfi di Cael Morrow (vedi l'introduzione del capitolo 5): il mosaico lo mostra a chi lo sa leggere, e fa nascere la domanda a chi non lo sa.</p>"
+    },
+    {
+      "id": "P3", "code": "P3", "name": "Il Canale del Cielo", "x": 450, "y": 80,
+      "control": "", "known": ["cobalt"],
+      "text": "<p>Lo stretto canale naturale da cui l'acqua della caverna risale verso Ank'Harel (il libro lo cita senza mapparlo). È un camino di roccia lungo centocinquanta metri, con una corrente che spinge verso l'alto: salire è facile, scendere costa il doppio. Sbuca in una cisterna dimenticata sotto il River District, chiusa da una grata arrugginita.</p><p><strong>Chi lo conosce.</strong> Negli archivi del Cobalt Soul c'è una leggenda sul «pozzo che respira» del River District. Il Cobalt Soul sa che esiste, non sa dove sbuca dentro Cael Morrow. È il secondo ingresso alla città, e chi lo trova può entrare senza passare dalle Fauci.</p>"
+    },
+    {
+      "id": "M7", "code": "M7-M8", "name": "Biblioteca Reale e biblioteca sommersa", "x": 680, "y": 330,
+      "control": "allegiance", "known": ["allegiance", "consortium"],
+      "text": "<p>Il corridoio protetto, la sala di lettura dove si è accampata Galeokaerda, lo studio con la <em>tavoletta del teletrasporto</em>, la sala rituale con il cerchio di teletrasporto e la biblioteca sommersa con i tre fantasmi (aree M7, M7a, M7b, M7c e M8). Sulla carta è dell'Allegiance; di fatto, finché Galeokaerda resta qui, il Consortium ci entra e ne esce quando vuole.</p><p><strong>Il cerchio di M7c.</strong> È collegato al tetto del First Eclipse, nel Suncut Bazaar. Chi ne conosce la sequenza di sigilli ha un ingresso privato a Cael Morrow.</p>"
+    },
+    {
+      "id": "M10", "code": "M10", "name": "Edificio pericolante", "x": 640, "y": 510,
+      "control": "", "known": ["allegiance"],
+      "text": "<p>Lo scriptorium dei monaci di Corellon (area M10), con gli affreschi di orchi e drow e la tavoletta di Alyxian che Insight cerca. Nel remix è a un intervallo dalla Biblioteca, fuori dalle gallerie: gli scavatori ci sono stati una volta sola e sono scappati dai serpentmaw.</p>"
+    },
+    {
+      "id": "P4", "code": "P4", "name": "La Scuola dei Cantori", "x": 790, "y": 480,
+      "control": "", "known": [],
+      "text": "<p>Un piccolo anfiteatro rotondo, con le gradinate intatte e il palco sprofondato di un metro. Nelle nicchie intorno al palco ci sono dodici cristalli grandi come un pugno: i cristalli che conservano i suoni citati nel campo base, qui ancora al loro posto. Un personaggio che ne tocca uno sente, nella mente, quello che il cristallo ha registrato.</p><p><strong>Che cosa si sente.</strong> Esercizi di canto di bambini. Una lezione sul ciclo delle lune. Una lite tra due insegnanti. E, nell'ultimo cristallo, la voce di un uomo stanco che parla a una folla prima della battaglia: «Non vi chiedo di sperare. Vi chiedo di restare.» I personaggi che hanno avuto la visione nella Emerald Grotto riconoscono la voce di Alyxian.</p><p><strong>Risorsa.</strong> Il Cobalt Soul darebbe molto per questi cristalli. L'Allegiance anche. Chi li porta via li toglie a tutti gli altri.</p>"
+    },
+    {
+      "id": "M9", "code": "M9", "name": "Tempio del Cuore Arcano", "x": 830, "y": 300,
+      "control": "", "known": ["allegiance", "consortium"],
+      "text": "<p>Il tempio di Corellon con la cupola divina e la scheggia di ruidium (area M9). Nel remix sta al centro della città, dove Gruumsh si fermò: dal cortile si vede la Piazza del Gigante. La barriera di lumi d'alga che parte dalla Biblioteca finisce davanti ai pilastri d'alabastro; più in là l'Allegiance non è mai riuscita ad andare.</p>"
+    },
+    {
+      "id": "P5", "code": "P5", "name": "La Piazza del Gigante", "x": 930, "y": 430,
+      "control": "", "known": ["allegiance"],
+      "text": "<p>La piazza dove stava Gruumsh. Nel lastricato ci sono due impronte lunghe dodici metri, sprofondate nella pietra fino al ginocchio di un uomo. Dentro le impronte cresce il ruidium: cristalli rossi alti come alberi, che ronzano piano quando qualcuno si avvicina. Intorno, statue di guerrieri elfi e orchi rovesciate tutte nella stessa direzione, come un campo di grano dopo il vento.</p><p><strong>Risorsa.</strong> È il giacimento di ruidium più ricco della città. Chi controlla la Piazza ne raccoglie 1d4 once a settimana. Chi stacca i cristalli con le proprie mani fa un tiro contro la corruzione per ogni giornata di lavoro (macro «Ruidium: tiro contro la corruzione»).</p><p><strong>Lore.</strong> Un personaggio che supera una prova di Saggezza (Percezione) con CD 15 nota che le statue non guardano Gruumsh: guardano tutte il tetto del tempio.</p>"
+    },
+    {
+      "id": "P6", "code": "P6", "name": "La Cicatrice", "x": 1080, "y": 410,
+      "control": "", "known": ["allegiance"],
+      "text": "<p>Un solco largo trenta metri che taglia la città da ovest a est, dove la lancia di Gruumsh, deviata da Alyxian, ha strisciato sulla terra prima di affondare. I bordi sono di roccia fusa e vetrificata. Sul fondo corre una vena continua di ruidium che fa luce come un fiume rosso: si segue senza bisogno di lumi, ed è il percorso segnalato più antico di Cael Morrow.</p><p>Chi la percorre sente, a tratti, un battito che non è il proprio.</p>"
+    },
+    {
+      "id": "P7", "code": "P7", "name": "L'Avamposto della Soglia", "x": 1240, "y": 480, "sealedExempt": true,
+      "control": "allegiance", "known": ["allegiance"], "secret": true,
+      "text": "<p>Il vero perimetro di sicurezza dell'Allegiance. Una cupola d'aria tra le rovine del palazzo, con tre baracche, una torretta di vedetta e una galleria che porta fino al bordo dello Squarcio. Ci vivono sei scholarly agent e una ricercatrice, la professoressa Edda Quillwater (scholarly mastermind), che da tre mesi non dorme più di due ore a notte e disegna lo Squarcio in ogni pagina del suo diario.</p><p>Si arriva dalla galleria segreta del Molo, oppure a nuoto dalle rovine e dalla Cicatrice. Chi arriva a nuoto senza distintivo fa scattare l'allerta a 2. Con l'allerta a 3, Cryon in persona scende qui con dieci scholarly agent.</p><p><strong>Chi sa dov'è.</strong> Cryon, Alakritos, Insight Acuere, gli agenti dell'avamposto. Nessun altro, nemmeno Scribble e Xot.</p>"
+    },
+    {
+      "id": "M16", "code": "M16", "name": "Rovine crollate", "x": 1150, "y": 630,
+      "control": "", "known": ["allegiance"],
+      "text": "<p>Il palazzo abbattuto, con le guglie d'argento e di bronzo piegate e gli slithering bloodfin (area M16). Nel remix è la periferia dello Squarcio: l'acqua qui è più calda, e ogni tanto passa una corrente che sa di ferro.</p>"
+    },
+    {
+      "id": "M17", "code": "M17", "name": "Squarcio verso il Netherdeep", "x": 1290, "y": 310,
+      "control": "", "known": ["allegiance"], "secret": true,
+      "text": "<p>Lo squarcio (area M17), nel punto più lontano dal Pozzo e più profondo della caverna. Dall'Avamposto parte una galleria corta che arriva fino alle punte di ruidium: chi la usa si trova a dieci metri dalla pellicola nera, all'asciutto. Chi arriva in qualunque altro modo arriva sott'acqua, e l'aboleth lo sente.</p>"
+    },
+    {
+      "id": "M11", "code": "M11", "name": "Foresta di alghe", "x": 1000, "y": 180,
+      "control": "aboleth", "known": ["allegiance"],
+      "text": "<p>Il giardino del tempio diventato tana dell'aboleth Alyxian (area M11), con i santuari di Corellon tra le alghe. È a un passo dal tempio, e per questo l'Allegiance non ha mai insistito nel cortile di M9. Il cadavere dell'esploratore con la <em>spilla dello scudo</em> era l'unico a sapere quanto si poteva avvicinare.</p>"
+    },
+    {
+      "id": "P8", "code": "P8", "name": "Il Vivaio", "x": 1160, "y": 90,
+      "control": "aboleth", "known": [],
+      "text": "<p>Una serie di vasche termali di un antico bagno pubblico, oltre la foresta di alghe, dove l'aboleth alleva la sua prole: grappoli di uova grigie avvolte nel muco, che pulsano di rosso. Sulle pareti, scritte con il muco e incise dalle ventose, la stessa frase in elfico antico ripetuta centinaia di volte: «Io li ho protetti».</p><p>Al centro c'è la parodia di un santuario: statue di Alyxian portate qui da tutta la città, girate tutte verso una vasca vuota. Lì si mette l'aboleth quando vuole essere adorato. Due aboleth spawn sono sempre di guardia; distruggere le uova (CA 10, 10 punti ferita a grappolo, sei grappoli) fa infuriare l'aboleth, che lascia la tana per dare la caccia ai colpevoli.</p>"
+    },
+    {
+      "id": "P9", "code": "P9", "name": "Il Santuario della Tessitrice della Luna", "x": 850, "y": 110,
+      "control": "", "known": [],
+      "text": "<p>Un tempietto a pianta circolare, dedicato a Sehanine, senza tetto: la cupola era di vetro, e ne restano solo le costole di metallo. Al centro c'è la statua di una deva con le ali chiuse e una falce di luna come arma, intatta, lucida come se qualcuno la pulisse. La targa ai suoi piedi dice in elfico antico: «Perigee, che vegliò sull'Apotheon».</p><p><strong>Lore.</strong> È il punto da cui seminare il nome di Perigee prima del Netherdeep (vedi «Storia di Alyxian: dove seminarla», blocco 1). Se i personaggi portano qui il Gioiello delle Tre Preghiere, le pietre si illuminano per un istante della luce argentata della luna.</p><p><strong>Rifugio.</strong> L'acqua del santuario è tranquilla, e nessuna creatura del Netherdeep entra nel cerchio delle colonne. I personaggi possono fare qui un riposo breve senza tirare per gli incontri.</p>"
+    },
+    {
+      "id": "P10", "code": "P10", "name": "La Campana d'aria", "x": 650, "y": 150,
+      "control": "consortium", "known": ["consortium"],
+      "text": "<p>Una bolla d'aria naturale rimasta intrappolata sotto la volta di un granaio crollato: l'aria è vecchia e sa di grano marcio, ma si respira. È il campo segreto del Consortium a Cael Morrow. Ci sono quattro brande, casse di campioni di ruidium pronti per la superficie e un tavolo con le carte che Galeokaerda ha copiato dal campo base.</p><p>Di solito ci sono due occult initiate e una spia; quando c'è un'operazione in corso, un occult silvertongue. Un percorso nascosto, segnato con spirali vermiglie graffiate sotto il corallo, porta da qui alla Biblioteca Reale.</p><p><strong>Rischio.</strong> L'aria basta per otto persone per un giorno. Poi va rinnovata, e il Consortium lo fa svuotandoci dentro le bolle respiratorie rubate al campo base. Ogni bolla che sparisce da M3 finisce qui.</p>"
+    },
+    {
+      "id": "M12", "code": "M12", "name": "Sentiero sulla scogliera", "x": 800, "y": 720,
+      "control": "", "known": [],
+      "text": "<p>Il sentiero tortuoso con le vittime pietrificate (area M12): l'inizio delle scogliere meridionali, che nessuna fazione ha ancora esplorato. Da qui si vedono, in alto, la villa e la torre di guardia.</p>"
+    },
+    {
+      "id": "M13", "code": "M13", "name": "Villa sulla scogliera", "x": 720, "y": 850,
+      "control": "", "known": ["consortium"],
+      "text": "<p>La villa del death embrace con l'<em>ascia bipenne di ruidium</em>, la Chiave del Netherdeep (area M13). Galeokaerda sa che la chiave è qui grazie alla tavoletta di M7b, ma non sa come arrivarci: per questo le servono i personaggi.</p>"
+    },
+    {
+      "id": "M14", "code": "M14", "name": "Torre di guardia", "x": 910, "y": 850,
+      "control": "spiriti", "known": [],
+      "text": "<p>La torre degli spettri della spada di Beltreath e del fantasma di Hadarai (area M14). Gli spiriti considerano loro tutte le scogliere meridionali, e la loro ronda si spinge fino alle Mura spezzate.</p>"
+    },
+    {
+      "id": "M15", "code": "M15", "name": "Torre di guardia crollata", "x": 960, "y": 650,
+      "control": "", "known": [],
+      "text": "<p>La torre rovesciata con l'armeria segreta e la trappola di luce radiosa (area M15). Il lampo della trappola si vede dalla foresta di alghe, che nel remix è a due intervalli di distanza: l'aboleth arriva lo stesso, ma più tardi.</p>"
+    },
+    {
+      "id": "P11", "code": "P11", "name": "Le Mura spezzate", "x": 600, "y": 780,
+      "control": "spiriti", "known": [],
+      "text": "<p>Il tratto delle mura dove le legioni di Gruumsh sono entrate. Le pietre sono sparse per un chilometro; tra di loro, scheletri di elfi e di orchi con le armi ancora in pugno, molti abbracciati come se si fossero sostenuti a vicenda fino alla fine. A volte, dall'acqua, arriva il suono di una tromba stonata: la ronda di Beltreath.</p><p><strong>Lore.</strong> «Le mura sono state abbattute, ridotte in macerie dal dio con un occhio solo», scrive Alyxian nella tavoletta di M10. Qui si vede che cosa voleva dire. Su un bastione ancora in piedi qualcuno ha inciso un elenco di nomi elfici e orcheschi mescolati: i difensori del tratto.</p>"
+    },
+    {
+      "id": "P12", "code": "P12", "name": "La Necropoli", "x": 420, "y": 720,
+      "control": "", "known": [],
+      "text": "<p>Il cimitero di Cael Morrow, terrazze di tombe scavate nella roccia, con le porte di bronzo verde. Nelle tombe di famiglia più recenti ci sono due file di nomi: i genitori elfi, poi i figli, e i nomi dei figli cambiano a metà della lapide, dalle forme elfiche a quelle orchesche. Una tomba ha una lapide nuova, aggiunta sopra la vecchia: un nome elfico cancellato e, sotto, un nome orchesco con le stesse lettere iniziali.</p><p><strong>Lore.</strong> La trasformazione dei primi orchi raccontata da chi l'ha subita: persone che sono rimaste le stesse e hanno dovuto cambiare nome. Chi parla con i morti (incantesimo <em>parlare con i morti</em>) sente che cosa ne pensavano. Uno di loro ha combattuto sulle Mura spezzate, accanto ad Alyxian.</p>"
+    }
+  ],
+  "paths": [
+    { "a": "M1", "b": "M4", "type": "galleria", "hours": 1 },
+    { "a": "M1", "b": "P1", "type": "galleria", "hours": 1 },
+    { "a": "M4", "b": "M5a", "type": "galleria", "hours": 1 },
+    { "a": "M5a", "b": "M7", "type": "galleria", "hours": 1 },
+    { "a": "P1", "b": "P7", "type": "galleria", "hours": 2, "hidden": true, "note": "la galleria segreta del Rettore Cryon" },
+    { "a": "P7", "b": "M17", "type": "galleria", "hours": 1 },
+    { "a": "M4", "b": "M6", "type": "segnalato", "hours": 1, "marker": "allegiance" },
+    { "a": "P1", "b": "P2", "type": "segnalato", "hours": 1, "marker": "allegiance" },
+    { "a": "M7", "b": "M9", "type": "segnalato", "hours": 1, "marker": "allegiance" },
+    { "a": "P5", "b": "P6", "type": "segnalato", "hours": 1, "note": "la vena di ruidium fa da guida" },
+    { "a": "M7", "b": "P10", "type": "segnalato", "hours": 2, "marker": "consortium", "hidden": true, "note": "spirali vermiglie sotto il corallo" },
+    { "a": "M1", "b": "M6", "type": "sommerso", "hours": 1 },
+    { "a": "M6", "b": "P3", "type": "sommerso", "hours": 2, "hoursBack": 4, "hidden": true, "note": "si sale con la corrente in 2 ore; in discesa ne servono 4" },
+    { "a": "P2", "b": "M10", "type": "sommerso", "hours": 1 },
+    { "a": "P2", "b": "P12", "type": "sommerso", "hours": 2 },
+    { "a": "M7", "b": "M10", "type": "sommerso", "hours": 1 },
+    { "a": "M10", "b": "P4", "type": "sommerso", "hours": 1 },
+    { "a": "P4", "b": "P5", "type": "sommerso", "hours": 1 },
+    { "a": "M9", "b": "P5", "type": "sommerso", "hours": 1 },
+    { "a": "M9", "b": "M11", "type": "sommerso", "hours": 1 },
+    { "a": "M11", "b": "P8", "type": "sommerso", "hours": 1, "hidden": true, "note": "si trova seguendo gli aboleth spawn" },
+    { "a": "M11", "b": "P9", "type": "sommerso", "hours": 1 },
+    { "a": "P9", "b": "P10", "type": "sommerso", "hours": 1 },
+    { "a": "P6", "b": "P7", "type": "sommerso", "hours": 1 },
+    { "a": "P6", "b": "M16", "type": "sommerso", "hours": 1 },
+    { "a": "M16", "b": "P7", "type": "sommerso", "hours": 1 },
+    { "a": "M16", "b": "M15", "type": "sommerso", "hours": 1 },
+    { "a": "M15", "b": "M11", "type": "sommerso", "hours": 2 },
+    { "a": "M15", "b": "M12", "type": "sommerso", "hours": 1 },
+    { "a": "M12", "b": "M13", "type": "sommerso", "hours": 1 },
+    { "a": "M12", "b": "M14", "type": "sommerso", "hours": 1 },
+    { "a": "M12", "b": "P11", "type": "sommerso", "hours": 1 },
+    { "a": "P11", "b": "P12", "type": "sommerso", "hours": 1 }
+  ]
+}

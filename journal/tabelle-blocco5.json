@@ -1,0 +1,46 @@
+[
+  {
+    "_id": "REMIXPROLIXDOVE1",
+    "name": "Dov'è Prolix?",
+    "formula": "1d6",
+    "description": "Dove si trova Prolix Yusaf in questo momento.",
+    "results": [
+      "Al crematorio (B2): discute con Reynard Allerton perché non bruci il vrock prima che lui lo abbia studiato.",
+      "Al Ready Room (B7): scrive nel suo box con la tenda tirata. Se qualcuno sbircia, copre i fogli con il gomito.",
+      "Alle macchine del sacrificio: misura le lame d'argento con un nastro e prende appunti. Un soldato lo guarda storto.",
+      "Alla Gatehold Barracks (B4): lavora sulle mappe del Betrayers' Rise con gli arcanisti, e ne copia una quando nessuno guarda.",
+      "Alla porta di Bazzoxan (B1): aspetta una cassa di attrezzi da una carovana e la conta tre volte.",
+      "Segue Aloysia a una distanza ridicola, nascosto male dietro un carretto. Aloysia lo sa benissimo."
+    ]
+  },
+  {
+    "_id": "REMIXQUESTDOVE01",
+    "name": "Dov'è Question?",
+    "formula": "1d6",
+    "description": "Dove si trova Question in questo momento.",
+    "results": [
+      {
+        "text": "Al Ready Room (B7): ozia al bancone con l'album aperto e invita chiunque a sedersi.",
+        "weight": 2
+      },
+      "Al Wall of the Unforgotten (B6): lascia un'offerta per gli amici che si è fatta qui, e che ha perso. Kalym le tiene compagnia.",
+      "Al tempio fatiscente (B5): ricopia le iscrizioni delle nicchie mentre Foghome le racconta di Melora.",
+      "All'ingresso del Betrayers' Rise (R1): studia i bassorilievi, ma non oltrepassa la soglia.",
+      "Al crematorio (B2): disegna i volti dei caduti prima che finiscano nel forno, per il muro."
+    ]
+  },
+  {
+    "_id": "REMIXALOYSDOVE01",
+    "name": "Dov'è Aloysia?",
+    "formula": "1d6",
+    "description": "Dove si trova Aloysia Telfan in questo momento.",
+    "results": [
+      "Al Ready Room (B7): cena da sola, vicino a chi sta parlando, e ascolta.",
+      "Alla Gatehold Barracks (B4): chiede di nuovo una scorta a Verin Thelyss, che di nuovo dice di no.",
+      "All'infermeria (B3): si fa cambiare la fasciatura alla spalla da Bautha Dyrr.",
+      "Alla porta di Bazzoxan (B1): discute con le sentinelle, vuole uscire verso il Betrayers' Rise.",
+      "Al tempio fatiscente (B5): esamina il mosaico di Avandra in silenzio, poi se ne va.",
+      "All'ingresso del Betrayers' Rise (R1): torna da un tentativo fallito, sporca di sangue non suo."
+    ]
+  }
+]

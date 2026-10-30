@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "REMIXMOSSEANKH01",
+    "name": "Mosse delle fazioni ad Ank'Harel",
+    "formula": "1d20",
+    "description": "Che cosa fa una fazione durante la giornata. La macro «Fazioni: il turno delle fazioni» pesca solo tra le mosse della fazione giusta; i rivali si muovono per conto della loro.",
+    "results": [
+      { "text": "Due scholarly agent bussano alla locanda dei personaggi con un invito del Crystal Chateau. È un invito cortese, e fuori aspettano altri due agenti.", "modes": ["allegiance"] },
+      { "text": "L'Allegiance raddoppia le guardie alle Fauci e comincia a chiedere il nome di chi compra corde, lanterne e pozioni di respirare sott'acqua al Suncut Bazaar.", "modes": ["allegiance"] },
+      { "text": "Un manifesto del Crystal Chateau offre 200 mo per notizie su «oggetti trafugati dagli scavi». Rerosha, Kruuk e mezzo bazar lo hanno letto.", "modes": ["allegiance"] },
+      { "text": "Cryon e Alakritos litigano a porte chiuse. Un apprendista esce piangendo dall'ufficio e cerca qualcuno con cui sfogarsi: sa per che cosa litigavano.", "modes": ["allegiance"] },
+      { "text": "Il First Eclipse chiude per «lavori». Dalle finestre del piano di sopra esce una luce rossa per tutta la notte, e la mattina il pavimento della strada è crepato.", "modes": ["consortium"] },
+      { "text": "Una lettera senza firma arriva a uno dei personaggi: un'offerta di lavoro, ben pagata, che tradisce in modo sottile la sua fazione.", "modes": ["consortium"] },
+      { "text": "Un occult initiate compra tutte le pergamene di <em>respirare sott'acqua</em> di Mystic Pursuits. Amkezne è furiosa e lo dice a chiunque.", "modes": ["consortium"] },
+      { "text": "Un excavator dell'Allegiance sparisce. Torna dopo due giorni, con un borsello pieno d'oro e nessuna voglia di parlare.", "modes": ["consortium"] },
+      { "text": "Iwo Zalarre si siede al tavolo accanto a quello dei personaggi e legge un libro per un'ora. Poi se ne va senza dire niente, e lascia il libro.", "modes": ["cobalt"] },
+      { "text": "Il Cobalt Soul chiude agli esterni la sala delle leggende di Cael Morrow. Chi vuole consultarla deve chiedere a Jamil, e Jamil vuole sapere perché.", "modes": ["cobalt"] },
+      { "text": "Due monastic infiltrator perquisiscono di notte la bottega di un rigattiere del Suncut Bazaar. La mattina dopo il rigattiere giura che non manca niente, ma qualcosa di rosso è sparito.", "modes": ["cobalt"] },
+      { "text": "Jamil manda un invito a cena ai rivali. Parlano per tre ore, e non lo raccontano a nessuno.", "modes": ["cobalt"] },
+      { "text": "Un predicatore dei Sentinels urla davanti al Crystal Chateau che gli scavi sveglieranno «quello che dorme». Stavolta la folla lo ascolta.", "modes": ["sentinels"] },
+      { "text": "Uno scavatore dell'Allegiance viene picchiato nel River District. Gli aggressori gli hanno lasciato in bocca un sassolino rosso.", "modes": ["sentinels"] },
+      { "text": "I due assassini dei Sentinels seguono uno dei personaggi per mezza giornata. Se li scopre, scappano sui tetti.", "modes": ["sentinels"] },
+      { "text": "Un incendio nell'archivio della Omnival Library brucia i registri delle spedizioni di due mesi fa. Il Contabile Khime piange tra la cenere.", "modes": ["sentinels"] },
+      { "text": "I rivali si fanno vedere in compagnia di uomini e donne della loro fazione, e salutano i personaggi come vecchi amici. O come nemici, se lo sono.", "modes": ["rivali"] },
+      { "text": "Uno dei rivali cerca un personaggio in segreto: vuole parlare, e non vuole che lo sappiano gli altri.", "modes": ["rivali"] },
+      { "text": "I rivali arrivano per primi dove i personaggi stavano andando. Hanno trovato quello che cercavano, o lo hanno rovinato.", "modes": ["rivali"] },
+      { "text": "I rivali offrono ai personaggi uno scambio: un'informazione su Cael Morrow per un'informazione sulla fazione dei personaggi.", "modes": ["rivali"] }
+    ]
+  }
+]

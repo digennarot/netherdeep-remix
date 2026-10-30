@@ -1,0 +1,104 @@
+{
+  "visions": [
+    {
+      "n": 1,
+      "text": "Nasce un bambino, in un silenzio inquietante, e la levatrice si rifiuta di tenerlo in braccio. «Guarda. Lo sa anche lui», gracchia alla madre, che stringe a sé il neonato tremando. «La sua piccola anima si prepara ai presagi funesti che lo perseguiteranno per il resto della vita.»",
+      "sign": "Un neonato: la nascita."
+    },
+    {
+      "n": 2,
+      "text": "Due genitori depongono un neonato davanti a un sacerdote di Pelor e implorano una benedizione. Il sacerdote compie un gesto sopra la testa del piccolo, poi si ritrae. «Qui non troverà aiuto. Non siate sciocchi. Non c'è cura per il marchio della luna rossa.»",
+      "sign": "Ancora un neonato, portato al tempio."
+    },
+    {
+      "n": 3,
+      "text": "Un fornaio nasconde dietro il bancone della sua bottega un ragazzino spettinato e sporco, e gli passa di nascosto una crostata quando nessuno guarda. Fuori, i bambini schiamazzano e chiamano ridendo il ragazzo segnato dal presagio, mentre un cliente borbotta furtivo al fornaio: «Ho sentito dire che ha il sangue del Traditore.»",
+      "sign": "Un ragazzino, già segnato dal presagio."
+    },
+    {
+      "n": 4,
+      "text": "Un ragazzo dorme agitato sotto una luna vermiglia, il cui chiarore lo bagna di tenui riflessi rossi. Non trova pace finché una nuvola non scivola davanti alla luna, celando il suo sonno a quello sguardo.",
+      "sign": "Un ragazzo che dorme sotto Ruidus."
+    },
+    {
+      "n": 5,
+      "text": "Un giovane è in piedi sulla cima di una montagna e contempla un verde paesaggio dello Xhorhas. Tiene in mano un mazzo di fiori rigogliosi. La visione cambia, e ora lui osserva lo stesso paesaggio devastato dalla Calamità: la vegetazione è bruciata fino al suolo, i cadaveri disseminano il pendio e lui stringe una spada che gronda sangue.",
+      "sign": "Un giovane, prima e dopo la Calamità."
+    },
+    {
+      "n": 6,
+      "text": "Una soldatessa è china sul suo comandante morto, in una piazza piena di corpi di persone e di mostri. Il peso della responsabilità le grava addosso, scomodo. «Araldo di sventura!» sputa ad Alyxian. «Portatore di guerra! Presagio! Noi ti abbiamo <em>accolto</em>!»",
+      "sign": "Ha già combattuto per una città che lo aveva accolto."
+    },
+    {
+      "n": 7,
+      "text": "Un ruggito gutturale esce dalla gola del giovane guerriero mentre fende i nemici che ha davanti. Il suo respiro affannoso innervosisce i soldati alleati intorno a lui. «Presagio di malvagità», sibila uno all'altro. «Meglio non farlo arrabbiare.»",
+      "sign": "Un giovane guerriero che i compagni temono."
+    },
+    {
+      "n": 8,
+      "text": "Il guerriero, ormai adulto, è inginocchiato davanti a un altare in un tempio in rovina di Avandra la Portatrice del Cambiamento. «Combatti per la libertà degli altri», sussurra con reverenza. La sua mano, sfregiata e tremante, stringe l'elsa della spada. «La fortuna aiuta gli audaci», dice con determinazione. «La Portatrice del Cambiamento non benedice i codardi.»",
+      "sign": "Ormai adulto; prega Avandra e non ha ancora il Gioiello."
+    },
+    {
+      "n": 9,
+      "text": "Il guerriero alza le mani al cielo, sotto il bagliore argenteo e protettivo della luna Catha, e una goccia di luce lunare gli cade nei palmi a coppa. Si trasforma in un vortice di colori, poi prende la forma di un piccolo amuleto d'oro. Il guerriero, colmo di stupore, sussurra una preghiera mentre si stringe al petto il <em>Gioiello delle Tre Preghiere</em>.",
+      "sign": "Nasce il Gioiello, con la luce di Catha: la prima benedizione."
+    },
+    {
+      "n": 10,
+      "text": "Sanguinando copiosamente, il guerriero attraversa zoppicando un campo di battaglia in fiamme, diretto verso una bambina che piange disperata. Lei urla quando lo vede; lui sussulta, ma la prende in braccio e la porta verso ciò che resta della civiltà, in lontananza.",
+      "sign": "Ferito; nessun Gioiello in vista. Sta tra le prime battaglie e il Gioiello."
+    },
+    {
+      "n": 11,
+      "text": "Sul punto di addormentarsi, rannicchiato sotto un albero e avvolto in una coperta logora, il guerriero fa scorrere un dito lungo il bordo del <em>Gioiello delle Tre Preghiere</em> e trova un po' di conforto in quella forma familiare.",
+      "sign": "Ha il Gioiello, e lo tiene come un conforto."
+    },
+    {
+      "n": 12,
+      "text": "Durante un temporale, il guerriero urla: «<em>Perché?</em> Avandra, non è questo il cambiamento che cerco! Dimmi perché percorro questa strada!» In risposta sente soltanto il fragore della tempesta. Si passa le mani tra i capelli. <em>«Dimmelo!»</em>",
+      "sign": "Dubita di Avandra: prima della seconda benedizione."
+    },
+    {
+      "n": 13,
+      "text": "Il guerriero è inginocchiato davanti a due tombe illuminate dalla luna, che portano i nomi dei suoi genitori. Tra le due posa dell'incenso, appoggiandolo su una semplice scatola decorata con campane nuziali. Sulla scatola è incisa la frase «A coloro il cui amore non vacillò mai». Al collo porta il <em>Gioiello delle Tre Preghiere</em>, che reca le benedizioni di Avandra la Portatrice del Cambiamento<em> e di </em>Sehanine la Tessitrice della Luna<em>.</em>",
+      "sign": "Il Gioiello porta due benedizioni, Avandra e Sehanine."
+    },
+    {
+      "n": 14,
+      "text": "La spada del guerriero taglia in due una bestia. La carcassa cade sul terreno intriso di sangue, accanto a molte altre vittime. Il guerriero, ferito, si erge sopra la carneficina. Due persone si affacciano dalle case vicine, poi quattro. Dieci. Decine. Corrono verso di lui gridando, alcune singhiozzano. «L'Apotheon!» «Dicevano che saresti venuto!» «Lo sapevamo!»",
+      "sign": "La gente lo chiama Apotheon per la prima volta."
+    },
+    {
+      "n": 15,
+      "text": "Il guerriero è inginocchiato davanti a un sovrano elfico. «Ho sentito una cosa molto curiosa su di te, Alyxian», dice l'elfo strascicando le parole. «Continui a rifiutare i titoli che ti offro. Le terre, le ricchezze, i servitori.» Il guerriero risponde sussurrando: «Il potere di cambiare il destino. È tutto ciò che ho mai chiesto.»",
+      "sign": "È famoso: un re lo conosce per nome e gli offre titoli."
+    },
+    {
+      "n": 16,
+      "text": "In una taverna la luce è calda e fioca, e il guerriero stanco ascolta la canzone di un bardo: «Non baciare sotto la luna rossa, non prometterti a occhi dolci! Presto andranno in un'altra casa, o ti legheranno il cuore con le loro bugie!» Paga da bere e se ne va, nonostante l'ora sia ancora presta.",
+      "sign": "Stanco e già celebre; nessuna età precisa."
+    },
+    {
+      "n": 17,
+      "text": "Il guerriero è sulla porta di una casa in rovina e scruta all'interno una famiglia rannicchiata e spaventata. Quando lo vedono si ritraggono, ma lui si toglie il mantello e lo posa sulle spalle di un ragazzo che trema. «Andate in città», dice con voce roca. «È un baluardo di speranza.»",
+      "sign": "Manda i profughi «in città»: una roccaforte che lui difende."
+    },
+    {
+      "n": 18,
+      "text": "L'aria della notte è così densa dell'odore metallico del sangue che il guerriero avverte il massacro prima di vederlo. Raggiunge la cima di una collina e osserva una città del Marquet meridionale, tremando tra l'attesa e il terrore, mentre la luce della luna Ruidus tinge di rosso i corpi.",
+      "sign": "Il massacro sotto Ruidus, verso la fine della Calamità."
+    },
+    {
+      "n": 19,
+      "text": "Davanti a uno specchio, il guerriero considera il prezzo che la Calamità gli ha fatto pagare: le cicatrici, la stanchezza scolpita nei lineamenti, tutto frutto dell'incessante scontro tra fede e paura. Stringe il <em>Gioiello delle Tre Preghiere</em>, ora completo grazie alla benedizione di Corellon il Cuore Arcano. «Tre manti divini», sussurra. «Che tutti noi possiamo essere liberati da questo compito.»",
+      "sign": "Il Gioiello è completo, tre benedizioni: è quasi la fine."
+    },
+    {
+      "n": 20,
+      "text": "Un guerriero è in piedi in cima a un tempio, sotto la mole torreggiante di un titano con un occhio solo, come se volesse misurare la sua lancia di dimensioni umane contro l'arma colossale del Dio Traditore. «Sono avvolto dalla luce della luna», sussurra, acceso da un'aura argentea. «Il mio cuore è temprato dalla magia profonda.» Un verde brillante pervade l'argento dell'aura. Il semidio affronta la lancia apocalittica di Gruumsh. «E sono armato del potere di cambiare il destino!» Una luce dorata divampa, un attimo prima che la lancia del dio si abbatta e tutto diventi buio.",
+      "sign": "La battaglia con Gruumsh: la fine."
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "_id": "REMIXCAELINCONT1",
+    "name": "Incontri nel pointcrawl di Cael Morrow",
+    "formula": "1d20",
+    "description": "Sostituisce la tabella Incontri a Cael Morrow del capitolo 5 durante i viaggi tra un punto e l'altro. La macro «Cael Morrow: viaggio» pesca solo i risultati adatti al tipo di percorso (galleria, segnalato, sommerso).",
+    "results": [
+      {
+        "text": "Uno @UUID[Actor.ZmM4NDkxNDExZmIw]{swarm of sorrowfish} si affolla attorno alla carcassa di uno squalo, affamato di altre prede.",
+        "modes": ["segnalato", "sommerso"]
+      },
+      {
+        "text": "Tre @UUID[Actor.MTRjMWRjOTk5OWM0]{scuttling serpentmaw} cercano cibo tra le macerie di una casa crollata sul percorso.",
+        "modes": ["sommerso"]
+      },
+      {
+        "text": "Una @UUID[Actor.ZTFlMzgzODgxODRh]{piovra gigante} lotta con un forziere chiuso a chiave: dentro ci sono 1.000 me in monete di Cael Morrow.",
+        "modes": ["sommerso"]
+      },
+      {
+        "text": "Dei tentacoli sbucano dall'oscurità sotto un ponte: un @UUID[Actor.MWI4NjkyNGUxMjU2]{death embrace} ha notato i personaggi.",
+        "modes": ["sommerso"]
+      },
+      {
+        "text": "Due @UUID[Actor.YWE4Zjc2NGU5M2U0]{slithering bloodfin} sfrecciano nell'acqua: tre strisce cremisi, poi due, poi nessuna. Attaccano alle spalle.",
+        "modes": ["segnalato", "sommerso"]
+      },
+      {
+        "text": "Due @UUID[Actor.MWEwOGZlMWY3ZGFl]{aboleth spawn} avvistano i personaggi e fuggono per avvertire l'@UUID[Actor.Y2E5NmNlM2I5ZDIw]{aboleth Alyxian}, che arriva 1 minuto dopo. Chi li segue senza farsi vedere trova la strada per il Vivaio (P8).",
+        "modes": ["segnalato", "sommerso"]
+      },
+      {
+        "text": "Lo @UUID[Actor.NjBlMThjNTE1NTEz]{squalo gigante corrotto} gira intorno al gruppo. In una galleria resta fuori dalla barriera e segue i personaggi fino al punto successivo, sbattendo il muso contro la luce azzurra. Sott'acqua attacca.",
+        "modes": ["galleria", "segnalato", "sommerso"]
+      },
+      {
+        "text": "Un messaggio telepatico dell'aboleth raggiunge un personaggio a caso: tira sulla @UUID[JournalEntry.ZDZmNjE4NDlkNzMw]{tabella Emozioni avvelenate} (tiro salvezza su Saggezza con CD 10). Se l'aboleth ha perso questo potere, il personaggio sente solo un pianto lontano.",
+        "modes": ["galleria", "segnalato", "sommerso"]
+      },
+      {
+        "text": "Eco del Netherdeep. Per un minuto l'acqua scorre al contrario e si riempie di bolle di luce rossa. Ogni personaggio fa un tiro salvezza su Saggezza con CD 13: se lo fallisce vive per un istante un ricordo che non è suo (tira sulla tabella @UUID[JournalEntry.MzQ1ZjYxNjIxYjEx.JournalEntryPage.KDk0MJuIw5MGD19L]{Storia dell'Apotheon}). Se lo supera, vede solo la luce.",
+        "modes": ["galleria", "segnalato", "sommerso"]
+      },
+      {
+        "text": "Le barriere tremolano. Una chiave di volta del tratto ha un sovraccarico: la galleria si spegne e si riaccende ogni pochi secondi. Chi passa di corsa fa una prova di Destrezza (Acrobazia) con CD 12, altrimenti si ritrova in acqua per un round e la galleria si richiude dietro di lui. Guasto o sabotaggio? Nessuno lo sa ancora.",
+        "modes": ["galleria"]
+      },
+      {
+        "text": "Una squadra di scavo dell'Allegiance: due @UUID[Actor.NmViY2QwZDE3Zjg5]{scholarly excavator} e uno @UUID[Actor.YjY4ZGM2ZDlhZGZj]{scholarly agent} trascinano casse di reperti verso il campo base. Chiedono il distintivo. Se tutto è in regola, chiacchierano volentieri e regalano una dritta su un punto vicino.",
+        "modes": ["galleria", "segnalato"]
+      },
+      {
+        "text": "Una pattuglia della fazione che controlla la zona (vedi «Controllo territoriale»). Se nessuno controlla la zona, è una pattuglia di passaggio della fazione più vicina.",
+        "modes": ["galleria", "segnalato", "sommerso"],
+        "weight": 2
+      },
+      {
+        "text": "I rivali. Stanno andando dove vanno i personaggi, o ne stanno tornando con qualcosa in mano. Usa i blocchi di fascia 3 e la pagina «Gestire i rivali» del blocco 1: questa volta come si comportano?",
+        "modes": ["galleria", "segnalato", "sommerso"]
+      },
+      {
+        "text": "Una @UUID[Actor.ZDQ0MTVlNDE4NzQ0]{spia} del Consortium e due @UUID[Actor.OGJiNWRlYzdkZGIw]{occult initiate}, travestiti da scavatori dell'Allegiance, stanno spostando i lumi d'alga di un percorso. Se vengono scoperti, fingono di essersi persi.",
+        "modes": ["segnalato", "sommerso"]
+      },
+      {
+        "text": "Un @UUID[Actor.MzNkMmFlZTgwYWUy]{monastic infiltrator} del Cobalt Soul ricopia un'iscrizione su una tela cerata, senza distintivo. Non vuole combattere. Se i personaggi lo lasciano andare, prima di sparire indica loro un punto che nessuno ha ancora segnato sulle carte.",
+        "modes": ["sommerso"]
+      },
+      {
+        "text": "Una processione di fantasmi di elfi e orchi rivive l'evacuazione della città: famiglie con fagotti, bambini per mano, un vecchio che trascina una gabbia vuota. Parlano il dialetto antico. Se qualcuno chiede la strada, indicano un percorso nascosto verso un punto vicino.",
+        "modes": ["segnalato", "sommerso"]
+      },
+      {
+        "text": "Una ronda di Beltreath: due @UUID[Actor.MmJjODc1NzBkOGY3]{guerrieri spettri della spada} cercano invasori. Se i personaggi dicono di voler aiutare l'Apotheon, li scortano fino alla Torre di guardia (M14).",
+        "modes": ["sommerso"]
+      },
+      {
+        "text": "Olara raccoglie alghe con una rete, canticchiando. Invita i personaggi alla Last Willow Tavern e, se accettano, conosce una scorciatoia: il prossimo tratto verso M6 dura la metà.",
+        "modes": ["segnalato", "sommerso"]
+      },
+      {
+        "text": "Un @UUID[Actor.N2ExNjVmODM4ZDU2]{light devourer} risalito dal Netherdeep si avvicina alle luci del gruppo. Più si è vicini allo Squarcio, più è affamato.",
+        "modes": ["sommerso"]
+      }
+    ]
+  },
+  {
+    "_id": "REMIXCAELTRACCE1",
+    "name": "Tracce delle fazioni a Cael Morrow",
+    "formula": "1d12",
+    "description": "Indizi su che cosa fanno le altre fazioni mentre i personaggi non guardano. Da far trovare in un punto appena raggiunto, sul cadavere di un nemico o tra le carte rubate.",
+    "results": [
+      "Lumi d'alga spostati: qualcuno ha ridisegnato un percorso segnalato perché porti dritto alla tana di una bestia. Le ventose di vetro dei lumi sono state staccate con un coltello a lama curva, come quelli del Consortium.",
+      "Una spirale vermiglia graffiata sotto il corallo, all'altezza delle ginocchia. Cento passi più avanti, un'altra. È il segno del Consortium: seguendolo si arriva alla Campana d'aria (P10).",
+      "Una cassa dell'Allegiance aperta con un coltello. Mancano le pozioni di respirare sott'acqua. Sul fondo, una ricevuta con una sola iniziale: «L.»",
+      "Un rilievo a carboncino su tela cerata: le iscrizioni dell'Edificio pericolante (M10) ricopiate con cura. A margine, con la grafia minuta dei monaci del Cobalt Soul: «Perché i monaci di Corellon non nominano mai Gruumsh?»",
+      "Una corda d'ancoraggio tagliata e un sacco di campioni di ruidium abbandonato. Qualcuno è scappato di corsa. Il sacco porta il marchio dell'Allegiance; il nodo della corda no.",
+      "Una chiave di volta spenta, rimossa e lasciata a terra in un edificio che ieri era asciutto. Dentro, pesci morti e un banco da lavoro rovesciato. Sulla chiave, graffi di uno strumento da scasso.",
+      "Una tavoletta di cera dentro una bottiglia tappata: gli orari dei cambi della guardia al Pozzo (M1-M3), scritti in cifra. Qualcuno prepara un'entrata.",
+      "Nel limo, le impronte di un costrutto pesante e quelle, leggere, di un'elfa. Vanno verso sud, verso le scogliere. Galeokaerda e Crescent cercano la Chiave del Netherdeep.",
+      "Una pagina strappata dal registro di Insight Acuere: l'inventario delle chiavi di volta del Molo (P1). Dodici, poi corretto a undici, poi a dieci, con un punto interrogativo.",
+      "Un'esca: carne fresca legata a una pietra in mezzo a un percorso, per attirare i predatori. Qualcuno vuole chiudere quella via agli altri, senza farsi vedere.",
+      "Un segno dei rivali, lasciato apposta per i personaggi: una freccia di Maggie conficcata in una porta, con un biglietto arrotolato. Che cosa dice dipende da come stanno le cose tra voi.",
+      "Su ogni volto di Corellon di una strada, qualcuno ha raschiato via gli occhi e ha inciso con le ventose una parola sola, in elfico antico: «Io». L'aboleth sta lasciando la sua firma sempre più lontano dalla tana."
+    ]
+  }
+]

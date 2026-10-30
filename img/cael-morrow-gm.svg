@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920" font-family="Georgia, 'Times New Roman', serif">
+<defs><radialGradient id="bg" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#123047"/><stop offset="1" stop-color="#050d16"/></radialGradient></defs>
+<rect width="1400" height="920" fill="url(#bg)"/>
+<text x="30" y="50" font-size="30" fill="#d6eaf8">Cael Morrow: mappa a punti (GM)</text>
+<path d="M110,450 L330,330" fill="none" stroke="#5dade2" stroke-width="7" stroke-linecap="round"/>
+<circle cx="220" cy="390" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="220" y="395" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M110,450 L230,610" fill="none" stroke="#5dade2" stroke-width="7" stroke-linecap="round"/>
+<circle cx="170" cy="530" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="170" y="535" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M330,330 L520,300" fill="none" stroke="#5dade2" stroke-width="7" stroke-linecap="round"/>
+<circle cx="425" cy="315" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="425" y="320" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M520,300 L680,330" fill="none" stroke="#5dade2" stroke-width="7" stroke-linecap="round"/>
+<circle cx="600" cy="315" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="600" y="320" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M230,610 Q740,580 1240,480" fill="none" stroke="#5dade2" stroke-width="7" stroke-linecap="round" stroke-opacity="0.8"/>
+<path d="M230,610 Q740,580 1240,480" fill="none" stroke="#f5b041" stroke-width="1.5" stroke-dasharray="2 4"/>
+<circle cx="737.5" cy="562.5" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="737.5" y="567.5" font-size="13" text-anchor="middle" fill="#eaf2f8">2</text>
+<path d="M1240,480 L1290,310" fill="none" stroke="#5dade2" stroke-width="7" stroke-linecap="round"/>
+<circle cx="1265" cy="395" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="1265" y="400" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M330,330 L200,210" fill="none" stroke="#58d68d" stroke-width="4" stroke-dasharray="14 8"/>
+<circle cx="265" cy="270" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="265" y="275" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M230,610 L420,470" fill="none" stroke="#58d68d" stroke-width="4" stroke-dasharray="14 8"/>
+<circle cx="325" cy="540" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="325" y="545" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M680,330 L830,300" fill="none" stroke="#58d68d" stroke-width="4" stroke-dasharray="14 8"/>
+<circle cx="755" cy="315" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="755" y="320" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M930,430 L1080,410" fill="none" stroke="#58d68d" stroke-width="4" stroke-dasharray="14 8"/>
+<circle cx="1005" cy="420" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="1005" y="425" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M680,330 L650,150" fill="none" stroke="#58d68d" stroke-width="4" stroke-dasharray="14 8" stroke-opacity="0.8"/>
+<path d="M680,330 L650,150" fill="none" stroke="#f5b041" stroke-width="1.5" stroke-dasharray="2 4"/>
+<circle cx="665" cy="240" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="665" y="245" font-size="13" text-anchor="middle" fill="#eaf2f8">2</text>
+<path d="M110,450 L200,210" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="155" cy="330" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="155" y="335" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M200,210 L450,80" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round" stroke-opacity="0.8"/>
+<path d="M200,210 L450,80" fill="none" stroke="#f5b041" stroke-width="1.5" stroke-dasharray="2 4"/>
+<circle cx="325" cy="145" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="325" y="150" font-size="13" text-anchor="middle" fill="#eaf2f8">2</text>
+<path d="M420,470 L640,510" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="530" cy="490" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="530" y="495" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M420,470 L420,720" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="420" cy="595" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="420" y="600" font-size="13" text-anchor="middle" fill="#eaf2f8">2</text>
+<path d="M680,330 L640,510" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="660" cy="420" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="660" y="425" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M640,510 L790,480" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="715" cy="495" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="715" y="500" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M790,480 L930,430" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="860" cy="455" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="860" y="460" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M830,300 L930,430" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="880" cy="365" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="880" y="370" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M830,300 L1000,180" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="915" cy="240" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="915" y="245" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M1000,180 L1160,90" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round" stroke-opacity="0.8"/>
+<path d="M1000,180 L1160,90" fill="none" stroke="#f5b041" stroke-width="1.5" stroke-dasharray="2 4"/>
+<circle cx="1080" cy="135" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="1080" y="140" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M1000,180 L850,110" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="925" cy="145" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="925" y="150" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M850,110 L650,150" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="750" cy="130" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="750" y="135" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M1080,410 L1240,480" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="1160" cy="445" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="1160" y="450" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M1080,410 L1150,630" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="1115" cy="520" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="1115" y="525" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M1150,630 L1240,480" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="1195" cy="555" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="1195" y="560" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M1150,630 L960,650" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="1055" cy="640" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="1055" y="645" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M960,650 L1000,180" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="980" cy="415" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="980" y="420" font-size="13" text-anchor="middle" fill="#eaf2f8">2</text>
+<path d="M960,650 L800,720" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="880" cy="685" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="880" y="690" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M800,720 L720,850" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="760" cy="785" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="760" y="790" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M800,720 L910,850" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="855" cy="785" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="855" y="790" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M800,720 L600,780" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="700" cy="750" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="700" y="755" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<path d="M600,780 L420,720" fill="none" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>
+<circle cx="510" cy="750" r="11" fill="#0b1f2e" stroke="#eaf2f8" stroke-width="1"/>
+<text x="510" y="755" font-size="13" text-anchor="middle" fill="#eaf2f8">1</text>
+<circle cx="110" cy="450" r="24" fill="#d68910" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="110" y="456" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">M1-M3</text>
+<text x="110" y="494" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Il Pozzo e il campo base</text>
+<circle cx="230" cy="610" r="24" fill="#d68910" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="230" y="616" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P1</text>
+<text x="230" y="654" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Il Molo delle chiavi</text>
+<circle cx="330" cy="330" r="24" fill="#d68910" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="330" y="336" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M4</text>
+<text x="330" y="374" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Foresteria reale</text>
+<circle cx="520" cy="300" r="24" fill="#d68910" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="520" y="306" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M5a</text>
+<text x="520" y="344" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Torre di guardia fatiscente</text>
+<circle cx="200" cy="210" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="200" y="216" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M6</text>
+<text x="200" y="254" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Last Willow Tavern</text>
+<circle cx="420" cy="470" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="420" y="476" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P2</text>
+<text x="420" y="514" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Il Mercato delle Conchiglie</text>
+<circle cx="450" cy="80" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="450" y="86" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P3</text>
+<text x="450" y="124" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Il Canale del Cielo</text>
+<circle cx="680" cy="330" r="24" fill="#d68910" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="680" y="336" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">M7-M8</text>
+<text x="680" y="374" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Biblioteca Reale e biblioteca sommersa</text>
+<circle cx="640" cy="510" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="640" y="516" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M10</text>
+<text x="640" y="554" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Edificio pericolante</text>
+<circle cx="790" cy="480" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="790" y="486" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P4</text>
+<text x="790" y="524" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">La Scuola dei Cantori</text>
+<circle cx="830" cy="300" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="830" y="306" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M9</text>
+<text x="830" y="344" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Tempio del Cuore Arcano</text>
+<circle cx="930" cy="430" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="930" y="436" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P5</text>
+<text x="930" y="474" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">La Piazza del Gigante</text>
+<circle cx="1080" cy="410" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="1080" y="416" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P6</text>
+<text x="1080" y="454" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">La Cicatrice</text>
+<circle cx="1240" cy="480" r="24" fill="#d68910" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="1240" y="486" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P7</text>
+<text x="1240" y="524" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">L'Avamposto della Soglia</text>
+<circle cx="1150" cy="630" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="1150" y="636" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M16</text>
+<text x="1150" y="674" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Rovine crollate</text>
+<circle cx="1290" cy="310" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="1290" y="316" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M17</text>
+<text x="1290" y="354" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Squarcio verso il Netherdeep</text>
+<circle cx="1000" cy="180" r="24" fill="#7d3c98" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="1000" y="186" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M11</text>
+<text x="1000" y="224" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Foresta di alghe</text>
+<circle cx="1160" cy="90" r="24" fill="#7d3c98" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="1160" y="96" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P8</text>
+<text x="1160" y="134" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Il Vivaio</text>
+<circle cx="850" cy="110" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="850" y="116" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P9</text>
+<text x="850" y="154" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Il Santuario della Tessitrice della Luna</text>
+<circle cx="650" cy="150" r="24" fill="#c0392b" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="650" y="156" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P10</text>
+<text x="650" y="194" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">La Campana d'aria</text>
+<circle cx="800" cy="720" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="800" y="726" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M12</text>
+<text x="800" y="764" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Sentiero sulla scogliera</text>
+<circle cx="720" cy="850" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="720" y="856" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M13</text>
+<text x="720" y="894" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Villa sulla scogliera</text>
+<circle cx="910" cy="850" r="24" fill="#48c9b0" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="910" y="856" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M14</text>
+<text x="910" y="894" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Torre di guardia</text>
+<circle cx="960" cy="650" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="960" y="656" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">M15</text>
+<text x="960" y="694" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Torre di guardia crollata</text>
+<circle cx="600" cy="780" r="24" fill="#48c9b0" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="600" y="786" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P11</text>
+<text x="600" y="824" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">Le Mura spezzate</text>
+<circle cx="420" cy="720" r="24" fill="#566573" stroke="#fdfefe" stroke-width="2.5"/>
+<text x="420" y="726" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">P12</text>
+<text x="420" y="764" font-size="16" text-anchor="middle" fill="#eaf2f8" stroke="#050d16" stroke-width="4" paint-order="stroke">La Necropoli</text>
+<g font-size="15" fill="#eaf2f8">
+<path d="M30,712 l60,0" stroke="#5dade2" stroke-width="7" stroke-linecap="round"/><text x="102" y="717">Galleria (asciutta, barriere azzurre)</text>
+<path d="M30,736 l60,0" stroke="#58d68d" stroke-width="4" stroke-dasharray="14 8"/><text x="102" y="741">Percorso segnalato (lumi d'alga)</text>
+<path d="M30,760 l60,0" stroke="#1b4f72" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/><text x="102" y="765">Percorso sommerso</text>
+<text x="30" y="789">Il numero sul percorso: ore di viaggio</text>
+<path d="M30,808 l60,0" stroke="#f5b041" stroke-width="1.5" stroke-dasharray="2 4"/><text x="102" y="813">Percorso nascosto</text>
+<circle cx="38" cy="835" r="8" fill="#d68910"/><text x="52" y="840" font-size="13">Allegiance of Allsight</text>
+<circle cx="38" cy="857" r="8" fill="#c0392b"/><text x="52" y="862" font-size="13">Consortium of the Vermilion Dream</text>
+<circle cx="38" cy="879" r="8" fill="#2471a3"/><text x="52" y="884" font-size="13">Cobalt Soul</text>
+<circle cx="298" cy="835" r="8" fill="#7d3c98"/><text x="312" y="840" font-size="13">Aboleth Alyxian</text>
+<circle cx="298" cy="857" r="8" fill="#48c9b0"/><text x="312" y="862" font-size="13">Spiriti di Cael Morrow</text>
+<circle cx="298" cy="879" r="8" fill="#566573"/><text x="312" y="884" font-size="13">Nessuno</text>
+</g></svg>

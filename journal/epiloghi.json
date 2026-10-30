@@ -1,0 +1,42 @@
+{
+  "outcomes": {
+    "killed": { "name": "Alyxian ucciso", "book": "il finale neutrale: Alyxian riposa in pace", "ruidium": false },
+    "unleashed": { "name": "Alyxian scatenato", "book": "il finale peggiore: la devastazione scatenata", "ruidium": true },
+    "redeemed": { "name": "Alyxian redento", "book": "il finale migliore: un mondo che ha ricordato", "ruidium": false }
+  },
+  "factions": {
+    "allegiance": {
+      "killed": { "mission": "fallita", "text": "Il ruidium sparisce, e con lui anni di ricerche. I rettori ringraziano i personaggi in pubblico e li tengono fuori da tutto in privato. Se l'Allegiance si era spaccata, ne esce più forte Alakritos: lui l'aveva detto che era pericoloso." },
+      "unleashed": { "mission": "fallita", "text": "Alyxian libero promette tutto, e per qualche giorno l'Allegiance gli crede. Poi il Netherdeep si rovescia sulla costa. I rettori negano di aver mai mandato qualcuno laggiù: i personaggi diventano il capro espiatorio, oppure gli unici a cui chiedere aiuto." },
+      "redeemed": { "mission": "fallita", "text": "Niente ruidium, niente ricompensa. Ma Alyxian l'Assolto è la più grande scoperta nella storia dell'accademia, e l'Allegiance vuole sapere tutto: offre ai personaggi un posto d'onore, senza oro, in cambio del loro racconto." }
+    },
+    "consortium": {
+      "killed": { "mission": "fallita", "text": "Furia. Aradrine perde la sua fonte, la sua scommessa e le escrescenze cremisi che portava sulle braccia, sparite insieme a tutto il ruidium. Il Consortium ricorda chi è stato: lettere senza firma, un contratto sulla testa dei personaggi, un vecchio alleato che sparisce." },
+      "unleashed": { "mission": "fallita", "text": "Il ruidium resta, e il Consortium ne ha più di chiunque altro. Aradrine paga lo stipendio promesso anche senza alleanza: i personaggi si scoprono ricchi e ben voluti in un mondo che brucia. Possono rifiutare, ma il Consortium non dimentica nemmeno i rifiuti." },
+      "redeemed": { "mission": "fallita", "text": "Furia, e paura. Aradrine si guarda le braccia guarite e non sa più chi è. Il Consortium si scioglie per qualche mese, poi si riorganizza intorno a un'idea sola: trovare un'altra fonte, e fargliela pagare." }
+    },
+    "cobalt": {
+      "killed": { "mission": "riuscita", "text": "Missione compiuta. Jamil paga quanto promesso e registra la morte di Alyxian negli archivi. Poi chiede ai personaggi come è morto, e scrive anche quello: la verità è il lavoro del Cobalt Soul." },
+      "unleashed": { "mission": "fallita", "text": "Fallimento totale. Il Cobalt Soul si mobilita contro Alyxian e vuole i personaggi in prima linea: sono quelli che lo conoscono meglio, e quelli che lo hanno liberato." },
+      "redeemed": { "mission": "riuscita", "text": "Missione compiuta, nel modo migliore. Jamil paga e chiede ai personaggi di dettare la storia di Alyxian agli archivisti, dalla nascita alla lancia di Gruumsh. Al Cobalt Soul resta un posto di fiducia per ciascuno di loro." }
+    }
+  },
+  "rivals": {
+    "friendly": {
+      "killed": "Aiutano i personaggi a uscire dal Netherdeep. Qualche tempo dopo li invitano in una taverna di Ank'Harel a ricordare insieme, poi provano a lasciarsi tutto alle spalle.",
+      "unleashed": "Diventano alleati fedeli dei personaggi e vanno ovunque il gruppo li mandi per arginare il disastro.",
+      "redeemed": "Riconoscono che i personaggi hanno vinto e li festeggiano per una notte intera. Col tempo possono diventare grandi amici."
+    },
+    "indifferent": {
+      "killed": "Fanno rapporto alle loro fazioni, senza dipingersi migliori né peggiori dei personaggi. Poi partono in cerca di un posto dove rifarsi un nome.",
+      "unleashed": "Danno la colpa ai personaggi, ma capiscono che l'unica speranza è unire le forze contro il nemico comune.",
+      "redeemed": "Ringraziano per la «gara», che in fondo non ha avuto un vincitore. Ayo: «La prossima volta che vorrete qualcosa, ci saremo anche noi. Magari solo per darvi del filo da torcere.»"
+    },
+    "hostile": {
+      "killed": "Raccontano alla loro fazione che i personaggi hanno distrutto la fonte del ruidium e ucciso un eroe leggendario. Sabotano i loro rapporti con la fazione e si fanno passare per gli avventurieri migliori.",
+      "unleashed": "Danno ai personaggi la colpa della devastazione e li dipingono come ficcanaso egoisti e inaffidabili presso governi e nazioni.",
+      "redeemed": "Capiscono che qui non c'è più niente da vincere e partono per terre lontane, a cercare un altro modo di lasciare il segno."
+    },
+    "dead": "Per qualche settimana i personaggi sognano i rivali: Maggie che parla senza voce, Ayo che esplode di rabbia, Galsariad che prova a riavvolgere il tempo, Dermot che piange gli amici, Irvan che si chiede se ha mai fatto qualcosa di grande. L'ultima notte Ayo saluta ciascuno: «Non ce la siamo cavata poi così male, eh? Ricordatevi di noi. Magari con un monumento a Jigow? Sarebbe bello.»"
+  }
+}
