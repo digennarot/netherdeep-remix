@@ -2252,6 +2252,9 @@ const MACROS = [
   ["Sblocca scena", "32-sblocca-scena.js", "icons/sundries/misc/lock-open-yellow.webp"]
 ];
 
+/** Le uniche macro che i giocatori vedono: le altre sono del GM e i loro nomi anticipano la trama. */
+const PLAYER_MACROS = new Set(["01-usa-ruidium.js"]);
+
 async function fetchText(path) {
   const response = await fetch(`modules/${MODULE_ID}/${path}`);
   if ( !response.ok ) throw new Error(`${MODULE_ID} | file mancante: ${path}`);
@@ -2262,20 +2265,24 @@ async function fetchText(path) {
 async function installMacros() {
   const folder = await moduleFolder("Macro");
   const commands = await Promise.all(MACROS.map(([, file]) => fetchText(`macros/${file}`)));
+  const { NONE, OBSERVER } = CONST.DOCUMENT_OWNERSHIP_LEVELS;
   for ( const [i, [name, file, img]] of MACROS.entries() ) {
     const command = commands[i];
+    const access = PLAYER_MACROS.has(file) ? OBSERVER : NONE;
     const existing = game.macros.find(m => m.getFlag(MODULE_ID, "file") === file);
     if ( existing ) {
       const changes = {};
       if ( existing.command !== command ) changes.command = command;
       if ( existing.name !== name ) changes.name = name;
       if ( existing.img !== img ) changes.img = img;
+      // solo il default: i permessi dati a mano ai singoli giocatori restano
+      if ( existing.ownership.default !== access ) changes["ownership.default"] = access;
       if ( !foundry.utils.isEmpty(changes) ) await existing.update(changes);
       continue;
     }
     await Macro.implementation.create({
       name, img, command, type: "script", folder: folder.id,
-      ownership: { default: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER },
+      ownership: { default: access },
       flags: { [MODULE_ID]: { file } }
     });
   }
