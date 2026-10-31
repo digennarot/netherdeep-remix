@@ -2214,6 +2214,141 @@ async function lockScene(locked, scene = canvas.scene) {
 }
 
 /* -------------------------------------------- */
+/*  Battle map del pacchetto CalloftheNetherdeep */
+/* -------------------------------------------- */
+
+// mappack.py (cor-cotn-traduzione) prepara immagini e worlds/<mondo>/netherdeep-maps/capN.json con muri, luci
+// e pin già in pixel di scena; qui si creano le scene. Tutto quello che crea l'import porta il flag MAP_FLAG:
+// rilanciando si rifà solo quello, i ritocchi a mano (token, muri disegnati, note tue) restano.
+const MAP_FLAG = "map";
+const MAP_PIN_ICONS = { book: "icons/svg/book.svg", remix: "icons/svg/star.svg" };
+
+/** Titoli dei diari del libro (non di quelli del remix) indicizzati per slug: dove punta ogni pin. */
+function bookHeadings() {
+  const index = new Map();
+  const parser = new DOMParser();
+  for ( const entry of game.journal ) {
+    if ( entry.getFlag(MODULE_ID, "journal") ) continue;
+    for ( const page of entry.pages ) {
+      if ( (page.type !== "text") || !page.text.content ) continue;
+      const doc = parser.parseFromString(page.text.content, "text/html");
+      for ( const h of doc.querySelectorAll("h1, h2, h3, h4, h5, h6") ) {
+        const key = foundry.documents.JournalEntryPage.slugifyHeading(h.textContent);
+        if ( !index.has(key) ) index.set(key, page);
+      }
+    }
+  }
+  return index;
+}
+
+const byElevation = (a, b) => (a.elevation.bottom ?? -Infinity) - (b.elevation.bottom ?? -Infinity);
+
+/** Allinea i livelli della scena a quelli del catalogo (dal basso verso l'alto) e li restituisce in ordine. */
+async function syncMapLevels(scene, levels) {
+  const current = scene.levels.contents.sort(byElevation);
+  const docs = levels.map((l, i) => ({
+    name: l.name, elevation: l.elevation, sort: i,
+    background: { src: l.src, color: "#000000" }, foreground: { src: l.foreground ?? null }
+  }));
+  const updates = docs.slice(0, current.length).map((d, i) => ({ _id: current[i].id, ...d }));
+  if ( updates.length ) await scene.updateEmbeddedDocuments("Level", updates);
+  const surplus = current.slice(docs.length).map(l => l.id);
+  if ( surplus.length ) await scene.deleteEmbeddedDocuments("Level", surplus);
+  if ( docs.length > current.length ) await scene.createEmbeddedDocuments("Level", docs.slice(current.length));
+  return scene.levels.contents.sort(byElevation);
+}
+
+async function importMapScene(data, scene, folder, headings, missing) {
+  const bookPage = heading => {
+    const page = headings.get(foundry.documents.JournalEntryPage.slugifyHeading(heading));
+    if ( !page ) missing.add(heading);
+    return page;
+  };
+  const page = bookPage(data.heading);
+  const sceneData = {
+    name: data.name, width: data.width, height: data.height, padding: 0,
+    grid: { type: CONST.GRID_TYPES.SQUARE, ...data.grid },
+    tokenVision: data.vision, fog: { exploration: data.vision },
+    journal: page?.parent.id ?? null, journalEntryPage: page?.id ?? null
+  };
+  if ( scene ) {
+    await scene.update(sceneData);
+    for ( const type of ["Wall", "AmbientLight", "Note"] ) {
+      const ids = scene.getEmbeddedCollection(type).filter(d => d.getFlag(MODULE_ID, MAP_FLAG)).map(d => d.id);
+      if ( ids.length ) await scene.deleteEmbeddedDocuments(type, ids);
+    }
+  }
+  else scene = await Scene.implementation.create({
+    ...sceneData, folder: folder?.id ?? null, navigation: false, flags: { [MODULE_ID]: { [MAP_FLAG]: data.key } }
+  });
+
+  const levels = await syncMapLevels(scene, data.levels);
+  const flags = { [MODULE_ID]: { [MAP_FLAG]: true } };
+  const walls = data.levels.flatMap((l, i) => l.walls.map(w => ({ ...w, levels: [levels[i].id], flags })));
+  const lights = data.levels.flatMap((l, i) => l.lights.map(light => ({
+    ...light, elevation: l.elevation.bottom, levels: [levels[i].id], flags
+  })));
+  const notes = data.pins.flatMap(pin => {
+    const target = pin.remix ? modulePage(pin.remix) : bookPage(pin.heading);
+    if ( !target ) {
+      if ( pin.remix ) missing.add(`pagina del remix ${pin.remix} (crea prima il diario del suo blocco)`);
+      return [];
+    }
+    return [{
+      entryId: target.parent.id, pageId: target.id, x: pin.x, y: pin.y, text: pin.label, iconSize: 40,
+      texture: { src: pin.remix ? MAP_PIN_ICONS.remix : MAP_PIN_ICONS.book },
+      flags: { [MODULE_ID]: { [MAP_FLAG]: true, area: pin.code ?? null, heading: pin.heading ?? null } }
+    }];
+  });
+  if ( walls.length ) await scene.createEmbeddedDocuments("Wall", walls);
+  if ( lights.length ) await scene.createEmbeddedDocuments("AmbientLight", lights);
+  if ( notes.length ) await scene.createEmbeddedDocuments("Note", notes);
+  return scene;
+}
+
+/**
+ * Crea (o rifà) le scene di un capitolo dal catalogo preparato da mappack.py. Le scene bloccate si saltano.
+ * @param {number} chapter
+ */
+async function importMapScenes(chapter) {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può importare le mappe.");
+  const path = `worlds/${game.world.id}/netherdeep-maps/cap${chapter}.json`;
+  const response = await fetch(path, { cache: "no-store" });
+  if ( !response.ok ) return ui.notifications.warn(`Manca ${path}: prepara il capitolo con mappack.py.`);
+  const { folder: folderName, scenes } = await response.json();
+  const folder = game.folders.find(f => (f.type === "Scene") && f.name.startsWith(folderName));
+  const existing = new Map(game.scenes.filter(s => s.getFlag(MODULE_ID, MAP_FLAG)).map(s => [s.getFlag(MODULE_ID, MAP_FLAG), s]));
+  const locked = scenes.filter(d => existing.get(d.key)?.getFlag(MODULE_ID, "locked"));
+  const todo = scenes.filter(d => !locked.includes(d));
+  const redo = todo.filter(d => existing.has(d.key)).length;
+  const ok = await foundry.applications.api.DialogV2.confirm({
+    window: { title: `Mappe del capitolo ${chapter}` },
+    content: `<p>Creo <strong>${todo.length - redo}</strong> scene nuove${redo
+      ? ` e rifaccio sfondi, muri, luci e pin di <strong>${redo}</strong> già importate (token e aggiunte tue restano)` : ""}.</p>
+      ${locked.length ? `<p>Salto le scene bloccate: ${locked.map(d => esc(d.name)).join(", ")}.</p>` : ""}`
+  });
+  if ( !ok ) return;
+  const headings = bookHeadings();
+  const missing = new Set();
+  const done = [];
+  for ( const data of todo ) done.push(await importMapScene(data, existing.get(data.key), folder, headings, missing));
+  if ( missing.size ) ui.notifications.warn(`Titoli non trovati nei diari: ${[...missing].join("; ")}`);
+  ui.notifications.info(`Capitolo ${chapter}: ${done.length} scene pronte nella cartella «${folder?.name ?? "senza cartella"}».`);
+  return done;
+}
+
+async function promptImportMapScenes() {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può importare le mappe.");
+  const data = await foundry.applications.api.DialogV2.input({
+    window: { title: "Mappe: importa un capitolo" },
+    content: `<div class="form-group"><label>Capitolo</label><div class="form-fields">
+      <input type="number" name="chapter" value="1" min="1" max="7" step="1"></div></div>`,
+    ok: { label: "Importa" }
+  });
+  if ( data ) return importMapScenes(Number(data.chapter));
+}
+
+/* -------------------------------------------- */
 /*  Installazione nel mondo                     */
 /* -------------------------------------------- */
 
@@ -2249,7 +2384,8 @@ const MACROS = [
   ["Attiva incontro", "29-attiva-incontro.js", "icons/skills/melee/weapons-crossed-swords-yellow.webp"],
   ["Cael Morrow: crea la scena a punti", "30-crea-scena-cael-morrow.js", "icons/environment/wilderness/wall-ruins.webp"],
   ["Blocca scena", "31-blocca-scena.js", "icons/sundries/misc/lock-steel-blue.webp"],
-  ["Sblocca scena", "32-sblocca-scena.js", "icons/sundries/misc/lock-open-yellow.webp"]
+  ["Sblocca scena", "32-sblocca-scena.js", "icons/sundries/misc/lock-open-yellow.webp"],
+  ["Mappe: importa un capitolo", "33-importa-mappe.js", "icons/tools/navigation/map-marked-green.webp"]
 ];
 
 /** Le uniche macro che i giocatori vedono: le altre sono del GM e i loro nomi anticipano la trama. */
@@ -2315,7 +2451,7 @@ Hooks.once("init", () => {
     CLOCK_OWNERS, contests, getFactionState, clocksReport, advanceClock, factionTurn, promptFactionTurn, promptFactionClocks,
     RIVALS, CHOICES, memories, epilogues, getNetherState, apotheonMemory, promptApotheonMemory, checkMemoryOrder,
     memoryOrderReport, promptMemoryState, rivalsFinale, promptRivalsFinale, netherdeepEpilogue, promptNetherdeepEpilogue,
-    activateEncounter, promptActivateEncounter, createCaelScene, lockScene
+    activateEncounter, promptActivateEncounter, createCaelScene, lockScene, importMapScenes, promptImportMapScenes
   };
 });
 
