@@ -2265,11 +2265,13 @@ async function importMapScene(data, scene, folder, headings, missing) {
     return page;
   };
   const page = bookPage(data.heading);
+  const variants = data.variants ?? [];
   const sceneData = {
     name: data.name, width: data.width, height: data.height, padding: 0,
     grid: { type: CONST.GRID_TYPES.SQUARE, ...data.grid },
     tokenVision: data.vision, fog: { exploration: data.vision },
-    journal: page?.parent.id ?? null, journalEntryPage: page?.id ?? null
+    journal: page?.parent.id ?? null, journalEntryPage: page?.id ?? null,
+    flags: { [MODULE_ID]: { [MAP_FLAG]: data.key, variants, variant: variants[0]?.name ?? null } }
   };
   if ( scene ) {
     await scene.update(sceneData);
@@ -2278,9 +2280,7 @@ async function importMapScene(data, scene, folder, headings, missing) {
       if ( ids.length ) await scene.deleteEmbeddedDocuments(type, ids);
     }
   }
-  else scene = await Scene.implementation.create({
-    ...sceneData, folder: folder?.id ?? null, navigation: false, flags: { [MODULE_ID]: { [MAP_FLAG]: data.key } }
-  });
+  else scene = await Scene.implementation.create({ ...sceneData, folder: folder?.id ?? null, navigation: false });
 
   const levels = await syncMapLevels(scene, data.levels);
   const flags = { [MODULE_ID]: { [MAP_FLAG]: true } };
@@ -2337,6 +2337,38 @@ async function importMapScenes(chapter) {
   return done;
 }
 
+/**
+ * Cambia la variante della battle map (giorno/notte, con o senza carro…): sostituisce lo sfondo di ogni livello.
+ * @param {string} name
+ * @param {Scene} [scene]
+ */
+async function applyMapVariant(name, scene = canvas.scene) {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può cambiare la mappa.");
+  const variant = scene?.getFlag(MODULE_ID, "variants")?.find(v => v.name === name);
+  if ( !variant ) return ui.notifications.warn(`La scena non ha la variante «${name}».`);
+  const levels = scene.levels.contents.sort(byElevation);
+  const updates = variant.srcs.flatMap((src, i) => levels[i] ? [{ _id: levels[i].id, "background.src": src }] : []);
+  await scene.updateEmbeddedDocuments("Level", updates);
+  await scene.setFlag(MODULE_ID, "variant", name);
+  ui.notifications.info(`«${scene.name}»: ${name}.`);
+  return scene;
+}
+
+async function promptMapVariant() {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può cambiare la mappa.");
+  const scene = canvas.scene;
+  const variants = scene?.getFlag(MODULE_ID, "variants") ?? [];
+  if ( variants.length < 2 ) return ui.notifications.warn("Questa scena non ha varianti da scegliere.");
+  const current = scene.getFlag(MODULE_ID, "variant");
+  const data = await foundry.applications.api.DialogV2.input({
+    window: { title: scene.name },
+    content: `<div class="form-group"><label>Variante</label>
+      <select name="variant">${variants.map(v => selectOption(v.name, v.name, current)).join("")}</select></div>`,
+    ok: { label: "Cambia" }
+  });
+  if ( data ) return applyMapVariant(data.variant, scene);
+}
+
 async function promptImportMapScenes() {
   if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può importare le mappe.");
   const data = await foundry.applications.api.DialogV2.input({
@@ -2385,7 +2417,8 @@ const MACROS = [
   ["Cael Morrow: crea la scena a punti", "30-crea-scena-cael-morrow.js", "icons/environment/wilderness/wall-ruins.webp"],
   ["Blocca scena", "31-blocca-scena.js", "icons/sundries/misc/lock-steel-blue.webp"],
   ["Sblocca scena", "32-sblocca-scena.js", "icons/sundries/misc/lock-open-yellow.webp"],
-  ["Mappe: importa un capitolo", "33-importa-mappe.js", "icons/tools/navigation/map-marked-green.webp"]
+  ["Mappe: importa un capitolo", "33-importa-mappe.js", "icons/tools/navigation/map-marked-green.webp"],
+  ["Mappe: cambia variante", "34-cambia-variante.js", "icons/magic/time/day-night-sun-moon.webp"]
 ];
 
 /** Le uniche macro che i giocatori vedono: le altre sono del GM e i loro nomi anticipano la trama. */
@@ -2451,7 +2484,8 @@ Hooks.once("init", () => {
     CLOCK_OWNERS, contests, getFactionState, clocksReport, advanceClock, factionTurn, promptFactionTurn, promptFactionClocks,
     RIVALS, CHOICES, memories, epilogues, getNetherState, apotheonMemory, promptApotheonMemory, checkMemoryOrder,
     memoryOrderReport, promptMemoryState, rivalsFinale, promptRivalsFinale, netherdeepEpilogue, promptNetherdeepEpilogue,
-    activateEncounter, promptActivateEncounter, createCaelScene, lockScene, importMapScenes, promptImportMapScenes
+    activateEncounter, promptActivateEncounter, createCaelScene, lockScene, importMapScenes, promptImportMapScenes,
+    applyMapVariant, promptMapVariant
   };
 });
 
