@@ -2223,7 +2223,7 @@ async function lockScene(locked, scene = canvas.scene) {
 const MAP_FLAG = "map";
 const MAP_PIN_ICONS = { book: "icons/svg/book.svg", remix: "icons/svg/star.svg" };
 
-/** Titoli dei diari del libro (non di quelli del remix) indicizzati per slug: dove punta ogni pin. */
+/** Titoli dei diari del libro (non di quelli del remix) indicizzati per slug: le pagine che li hanno, in ordine. */
 function bookHeadings() {
   const index = new Map();
   const parser = new DOMParser();
@@ -2234,7 +2234,8 @@ function bookHeadings() {
       const doc = parser.parseFromString(page.text.content, "text/html");
       for ( const h of doc.querySelectorAll("h1, h2, h3, h4, h5, h6") ) {
         const key = foundry.documents.JournalEntryPage.slugifyHeading(h.textContent);
-        if ( !index.has(key) ) index.set(key, page);
+        if ( !index.has(key) ) index.set(key, []);
+        if ( !index.get(key).includes(page) ) index.get(key).push(page);
       }
     }
   }
@@ -2259,8 +2260,10 @@ async function syncMapLevels(scene, levels) {
 }
 
 async function importMapScene(data, scene, folder, headings, missing) {
-  const bookPage = heading => {
-    const page = headings.get(foundry.documents.JournalEntryPage.slugifyHeading(heading));
+  // Lo stesso titolo può stare in più pagine (First Eclipse: guida del bazar e missione): il pin può sceglierla per nome.
+  const bookPage = (heading, pageName) => {
+    const pages = headings.get(foundry.documents.JournalEntryPage.slugifyHeading(heading)) ?? [];
+    const page = pages.find(p => p.name === pageName) ?? pages[0];
     if ( !page ) missing.add(heading);
     return page;
   };
@@ -2289,7 +2292,7 @@ async function importMapScene(data, scene, folder, headings, missing) {
     ...light, elevation: l.elevation.bottom, levels: [levels[i].id], flags
   })));
   const notes = data.pins.flatMap(pin => {
-    const target = pin.remix ? modulePage(pin.remix) : bookPage(pin.heading);
+    const target = pin.remix ? modulePage(pin.remix) : bookPage(pin.heading, pin.page);
     if ( !target ) {
       if ( pin.remix ) missing.add(`pagina del remix ${pin.remix} (crea prima il diario del suo blocco)`);
       return [];
@@ -2303,10 +2306,14 @@ async function importMapScene(data, scene, folder, headings, missing) {
   if ( walls.length ) await scene.createEmbeddedDocuments("Wall", walls);
   if ( lights.length ) await scene.createEmbeddedDocuments("AmbientLight", lights);
   if ( notes.length ) await scene.createEmbeddedDocuments("Note", notes);
-  const tiles = (data.tiles ?? []).map(({ src, ...t }) => ({
-    ...t, texture: { src }, elevation: data.levels[0].elevation.bottom, levels: [levels[0].id], flags
+  // I tetti sfumano quando un token ci passa sotto; i cataloghi vecchi non hanno level/elevation sulle tile.
+  // Il catalogo dà l'angolo in alto a sinistra, in v14 x/y della tile sono il punto d'ancoraggio (il centro).
+  const tiles = (data.tiles ?? []).map(({ src, level = 0, roof, ...t }) => ({
+    ...t, x: t.x + (t.width / 2), y: t.y + (t.height / 2), texture: { src }, elevation: t.elevation ?? data.levels[level].elevation.bottom, levels: [levels[level].id],
+    occlusion: { modes: roof ? [CONST.OCCLUSION_MODES.FADE] : [] }, flags
   }));
   if ( tiles.length ) await scene.createEmbeddedDocuments("Tile", tiles);
+  if ( data.start ) await scene.update({ initialLevel: levels[data.start].id });
   return scene;
 }
 
