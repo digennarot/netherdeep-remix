@@ -2275,7 +2275,7 @@ async function importMapScene(data, scene, folder, headings, missing) {
   };
   if ( scene ) {
     await scene.update(sceneData);
-    for ( const type of ["Wall", "AmbientLight", "Note"] ) {
+    for ( const type of ["Wall", "AmbientLight", "Note", "Tile"] ) {
       const ids = scene.getEmbeddedCollection(type).filter(d => d.getFlag(MODULE_ID, MAP_FLAG)).map(d => d.id);
       if ( ids.length ) await scene.deleteEmbeddedDocuments(type, ids);
     }
@@ -2303,6 +2303,10 @@ async function importMapScene(data, scene, folder, headings, missing) {
   if ( walls.length ) await scene.createEmbeddedDocuments("Wall", walls);
   if ( lights.length ) await scene.createEmbeddedDocuments("AmbientLight", lights);
   if ( notes.length ) await scene.createEmbeddedDocuments("Note", notes);
+  const tiles = (data.tiles ?? []).map(({ src, ...t }) => ({
+    ...t, texture: { src }, elevation: data.levels[0].elevation.bottom, levels: [levels[0].id], flags
+  }));
+  if ( tiles.length ) await scene.createEmbeddedDocuments("Tile", tiles);
   return scene;
 }
 
