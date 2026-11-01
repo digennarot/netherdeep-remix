@@ -2291,6 +2291,8 @@ async function importMapScene(data, scene, folder, headings, missing) {
   const lights = data.levels.flatMap((l, i) => l.lights.map(light => ({
     ...light, elevation: l.elevation.bottom, levels: [levels[i].id], flags
   })));
+  // I pin stanno sul livello di partenza: senza, Foundry li mostra su tutti i piani.
+  const start = data.start ?? 0;
   const notes = data.pins.flatMap(pin => {
     const target = pin.remix ? modulePage(pin.remix) : bookPage(pin.heading, pin.page);
     if ( !target ) {
@@ -2299,6 +2301,7 @@ async function importMapScene(data, scene, folder, headings, missing) {
     }
     return [{
       entryId: target.parent.id, pageId: target.id, x: pin.x, y: pin.y, text: pin.label, iconSize: 40,
+      elevation: data.levels[start].elevation.bottom, levels: [levels[start].id],
       texture: { src: pin.remix ? MAP_PIN_ICONS.remix : MAP_PIN_ICONS.book },
       flags: { [MODULE_ID]: { [MAP_FLAG]: true, area: pin.code ?? null, heading: pin.heading ?? null } }
     }];
