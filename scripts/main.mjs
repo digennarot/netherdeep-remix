@@ -2221,7 +2221,7 @@ async function lockScene(locked, scene = canvas.scene) {
 // e pin già in pixel di scena; qui si creano le scene. Tutto quello che crea l'import porta il flag MAP_FLAG:
 // rilanciando si rifà solo quello, i ritocchi a mano (token, muri disegnati, note tue) restano.
 const MAP_FLAG = "map";
-const MAP_PIN_ICONS = { book: "icons/svg/book.svg", remix: "icons/svg/star.svg" };
+const MAP_PIN_ICONS = { book: "icons/svg/book.svg", remix: "icons/svg/sun.svg" };
 
 /** Titoli dei diari del libro (non di quelli del remix) indicizzati per slug: le pagine che li hanno, in ordine. */
 function bookHeadings() {
@@ -2273,6 +2273,7 @@ async function importMapScene(data, scene, folder, headings, missing) {
     name: data.name, width: data.width, height: data.height, padding: 0,
     grid: { type: CONST.GRID_TYPES.SQUARE, ...data.grid },
     tokenVision: data.vision, fog: { exploration: data.vision },
+    ...(data.darkness != null ? { environment: { darknessLevel: data.darkness } } : {}),
     journal: page?.parent.id ?? null, journalEntryPage: page?.id ?? null,
     flags: { [MODULE_ID]: { [MAP_FLAG]: data.key, variants, variant: variants[0]?.name ?? null } }
   };
