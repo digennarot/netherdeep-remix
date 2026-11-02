@@ -2444,6 +2444,121 @@ async function promptMapVariant() {
   if ( data ) return applyMapVariant(data.variant, scene);
 }
 
+/* -------------------------------------------- */
+/*  Mostri homebrew del pacchetto di mappe      */
+/* -------------------------------------------- */
+
+/** Flag degli attori creati da importHomebrewActors: la chiave del catalogo, per rifarli al posto giusto. */
+const HOMEBREW_FLAG = "homebrew";
+
+/** Parti di danno dnd5e da coppie [formula, tipo] del catalogo. */
+function damageParts(list = []) {
+  return list.map(([formula, type]) => ({ custom: { enabled: true, formula }, types: [type] }));
+}
+
+/** Le attività dnd5e di una voce del catalogo: attacco, tiro salvezza, danno o cura, nell'ordine in cui servono. */
+function homebrewActivities(entry) {
+  const activation = { type: entry.a === "legendary" ? "legendary" : (entry.a ?? ""), value: entry.cost ?? 1 };
+  const consumption = (entry.recharge || entry.per) ? { targets: [{ type: "itemUses", value: "1" }] } : { targets: [] };
+  const list = [];
+  if ( entry.atk ) list.push({
+    type: "attack", activation, consumption,
+    range: { value: String(entry.atk.range ?? entry.atk.r), long: entry.atk.long ? String(entry.atk.long) : "", units: "ft" },
+    attack: { flat: true, bonus: String(entry.atk.b), type: { value: entry.atk.long ? "ranged" : "melee", classification: "weapon" } },
+    damage: { includeBase: false, parts: damageParts(entry.atk.dmg) }
+  });
+  // Il tiro salvezza che segue un attacco (prono, pietrificato…) non consuma usi e non ha un'attivazione sua.
+  if ( entry.save ) list.push({
+    type: "save", activation: entry.atk ? { ...activation, type: "" } : activation, consumption: entry.atk ? { targets: [] } : consumption,
+    save: { ability: [entry.save.ab], dc: { calculation: "", formula: String(entry.save.dc) } },
+    damage: { onSave: entry.save.half ? "half" : "none", parts: damageParts(entry.save.dmg) }
+  });
+  if ( entry.dmgRoll ) list.push({ type: "damage", activation, consumption, damage: { parts: damageParts(entry.dmgRoll) } });
+  if ( entry.heal ) list.push({ type: "heal", activation, consumption, healing: { custom: { enabled: true, formula: entry.heal }, types: ["healing"] } });
+  if ( !list.length && entry.a ) list.push({ type: "utility", activation, consumption });
+  return Object.fromEntries(list.map(activity => {
+    const _id = foundry.utils.randomID();
+    return [_id, { _id, ...activity }];
+  }));
+}
+
+/** I dati di un oggetto (privilegio o arma naturale) da una voce del catalogo. */
+function homebrewItem(entry, img) {
+  const uses = entry.recharge ? { max: "1", spent: 0, recovery: [{ period: "recharge", formula: String(entry.recharge), type: "recoverAll" }] }
+    : entry.per ? { max: "1", spent: 0, recovery: [{ period: entry.per, type: "recoverAll" }] }
+    : { max: "", spent: 0, recovery: [] };
+  const system = { description: { value: `<p>${entry.d}</p>` }, activities: homebrewActivities(entry), uses };
+  if ( entry.t === "weapon" ) Object.assign(system, { type: { value: "natural" }, equipped: true, proficient: 1 });
+  else system.type = { value: "monster" };
+  return { name: entry.n, type: entry.t ?? "feat", img, system };
+}
+
+/** I dati dell'attore (senza oggetti) da una voce del catalogo; base = attore del libro da cui prendere ritratto e token. */
+function homebrewActorData(m, base) {
+  const prof = Math.max(2, Math.floor((m.cr - 1) / 4) + 2);
+  const abilities = Object.fromEntries(Object.entries(m.abilities)
+    .map(([k, value]) => [k, { value, proficient: m.saves.includes(k) ? 1 : 0 }]));
+  const skills = Object.fromEntries(m.skills.map(k => [k, { value: 1 }]));
+  const passive = 10 + Math.floor((m.abilities.wis - 10) / 2) + (m.skills.includes("prc") ? prof : 0);
+  const speeds = Object.fromEntries(["walk", "burrow", "climb", "fly", "swim"].map(k => [k, String(m.speed[k] ?? 0)]));
+  const img = m.img ?? base?.img ?? "icons/svg/mystery-man.svg";
+  const cells = { huge: 3, lg: 2 }[m.size] ?? 1;
+  return {
+    name: m.name, type: "npc", img,
+    prototypeToken: base ? { ...base.prototypeToken.toObject(), name: m.name, actorLink: false }
+      : { name: m.name, texture: { src: img }, width: cells, height: cells },
+    system: {
+      abilities, skills,
+      attributes: {
+        ac: { calc: m.acCalc ?? "natural", flat: m.ac },
+        hp: { value: m.hp[0], max: m.hp[0], formula: m.hp[1] },
+        movement: { units: "ft", speeds, hover: false },
+        senses: { units: "ft", ranges: { darkvision: 0, blindsight: 0, tremorsense: 0, truesight: 0, ...m.senses },
+          special: [m.sensesSpecial, `Percezione passiva ${passive}`].filter(Boolean).join(", ") }
+      },
+      details: {
+        cr: m.cr, alignment: m.alignment,
+        type: { value: m.type, subtype: m.subtype ?? "", swarm: m.swarm ?? "" },
+        biography: { value: `<p>${m.bio}</p>` }
+      },
+      traits: {
+        size: m.size,
+        dr: { value: m.dr ?? [], bypasses: m.drBypass ?? [] },
+        di: { value: m.di ?? [] },
+        ci: { value: m.ci ?? [] },
+        languages: { value: m.languages ?? [], custom: m.telepathy ? `telepatia ${m.telepathy * 0.3} m` : "" }
+      },
+      resources: {
+        legact: { max: m.legact ?? 0, spent: 0 },
+        legres: { max: m.legres ?? 0, spent: 0 },
+        lair: { value: !!m.lair, initiative: 20 }
+      }
+    },
+    flags: { [MODULE_ID]: { [HOMEBREW_FLAG]: m.key } }
+  };
+}
+
+/**
+ * Crea (o rifà) gli attori dei mostri homebrew del pacchetto: i nuovi mostri del Netherdeep e gli Alyxian rivisti.
+ * Gli Alyxian del libro restano intatti: da loro si prendono solo ritratto e token.
+ */
+async function importHomebrewActors() {
+  if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può creare gli attori.");
+  const catalog = JSON.parse(await fetchText("journal/mostri-homebrew.json"));
+  const folder = await moduleFolder("Actor");
+  const created = [];
+  for ( const m of catalog ) {
+    const base = m.base ? game.actors.find(a => (a.name === m.base) && !a.getFlag(MODULE_ID, HOMEBREW_FLAG)) : null;
+    if ( m.base && !base ) ui.notifications.warn(`Non trovo l'attore del libro «${m.base}»: «${m.name}» resta senza ritratto.`);
+    const data = { ...homebrewActorData(m, base), folder: folder.id };
+    data.items = m.items.map(entry => homebrewItem(entry, data.img));
+    await game.actors.find(a => a.getFlag(MODULE_ID, HOMEBREW_FLAG) === m.key)?.delete();
+    created.push(await Actor.implementation.create(data));
+  }
+  ui.notifications.info(`Mostri homebrew: ${created.length} attori nella cartella «${folder.name}».`);
+  return created;
+}
+
 async function promptImportMapScenes() {
   if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può importare le mappe.");
   const data = await foundry.applications.api.DialogV2.input({
@@ -2493,7 +2608,9 @@ const MACROS = [
   ["Blocca scena", "31-blocca-scena.js", "icons/sundries/misc/lock-steel-blue.webp"],
   ["Sblocca scena", "32-sblocca-scena.js", "icons/sundries/misc/lock-open-yellow.webp"],
   ["Mappe: importa un capitolo", "33-importa-mappe.js", "icons/tools/navigation/map-marked-green.webp"],
-  ["Mappe: cambia variante", "34-cambia-variante.js", "icons/magic/time/day-night-sun-moon.webp"]
+  ["Mappe: cambia variante", "34-cambia-variante.js", "icons/magic/time/day-night-sun-moon.webp"],
+  ["Mappe: crea il diario homebrew", "35-crea-diario-homebrew.js", "icons/sundries/books/book-stack.webp"],
+  ["Mappe: crea i mostri homebrew", "36-mostri-homebrew.js", "icons/creatures/eyes/void-single-black-purple.webp"]
 ];
 
 /** Le uniche macro che i giocatori vedono: le altre sono del GM e i loro nomi anticipano la trama. */
@@ -2560,7 +2677,7 @@ Hooks.once("init", () => {
     RIVALS, CHOICES, memories, epilogues, getNetherState, apotheonMemory, promptApotheonMemory, checkMemoryOrder,
     memoryOrderReport, promptMemoryState, rivalsFinale, promptRivalsFinale, netherdeepEpilogue, promptNetherdeepEpilogue,
     activateEncounter, promptActivateEncounter, createCaelScene, lockScene, importMapScenes, promptImportMapScenes,
-    applyMapVariant, promptMapVariant
+    applyMapVariant, promptMapVariant, importHomebrewActors
   };
 });
 
