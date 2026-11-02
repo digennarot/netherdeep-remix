@@ -2290,8 +2290,11 @@ async function importMapScene(data, scene, folder, headings, missing) {
   const levels = await syncMapLevels(scene, data.levels);
   const flags = { [MODULE_ID]: { [MAP_FLAG]: true } };
   const walls = data.levels.flatMap((l, i) => l.walls.map(w => ({ ...w, levels: [levels[i].id], flags })));
-  const lights = data.levels.flatMap((l, i) => l.lights.map(light => ({
-    ...light, elevation: l.elevation.bottom, levels: [levels[i].id], flags
+  // Luci legate a una variante: accese solo con quella (applyMapVariant le scambia).
+  const lights = data.levels.flatMap((l, i) => l.lights.map(({ variant, ...light }) => ({
+    ...light, elevation: l.elevation.bottom, levels: [levels[i].id],
+    hidden: !!variant && (variant !== variants[0]?.name),
+    flags: { [MODULE_ID]: { [MAP_FLAG]: true, ...(variant ? { variant } : {}) } }
   })));
   // I pin stanno sul livello di partenza: senza, Foundry li mostra su tutti i piani.
   const start = data.start ?? 0;
@@ -2403,10 +2406,17 @@ async function applyMapVariant(name, scene = canvas.scene) {
   if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può cambiare la mappa.");
   const variant = scene?.getFlag(MODULE_ID, "variants")?.find(v => v.name === name);
   if ( !variant ) return ui.notifications.warn(`La scena non ha la variante «${name}».`);
+  // Luci e buio prima dello sfondo: cambiare lo sfondo ricarica il canvas.
+  const lights = scene.lights.filter(l => l.getFlag(MODULE_ID, "variant"))
+    .map(l => ({ _id: l.id, hidden: l.getFlag(MODULE_ID, "variant") !== name }));
+  if ( lights.length ) await scene.updateEmbeddedDocuments("AmbientLight", lights);
+  await scene.update({
+    ...(variant.darkness != null ? { "environment.darknessLevel": variant.darkness } : {}),
+    [`flags.${MODULE_ID}.variant`]: name
+  });
   const levels = scene.levels.contents.sort(byElevation);
   const updates = variant.srcs.flatMap((src, i) => levels[i] ? [{ _id: levels[i].id, "background.src": src }] : []);
   await scene.updateEmbeddedDocuments("Level", updates);
-  await scene.setFlag(MODULE_ID, "variant", name);
   ui.notifications.info(`«${scene.name}»: ${name}.`);
   return scene;
 }
