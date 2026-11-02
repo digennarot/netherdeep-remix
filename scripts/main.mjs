@@ -2543,7 +2543,9 @@ function homebrewActorData(m, base) {
         dr: { value: m.dr ?? [], bypasses: m.drBypass ?? [] },
         di: { value: m.di ?? [] },
         ci: { value: m.ci ?? [] },
-        languages: { value: m.languages ?? [], custom: m.telepathy ? `telepatia ${m.telepathy * 0.3} m` : "" }
+        // Telepatia nel campo di dnd5e: la scheda la mostra e la converte nelle unità del mondo.
+        languages: { value: m.languages ?? [], custom: "",
+          communication: m.telepathy ? { telepathy: { value: m.telepathy, units: "ft" } } : {} }
       },
       resources: {
         legact: { max: m.legact ?? 0, spent: 0 },
