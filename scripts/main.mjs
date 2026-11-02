@@ -2223,6 +2223,8 @@ async function lockScene(locked, scene = canvas.scene) {
 const MAP_FLAG = "map";
 const MAP_PIN_ICONS = { book: "icons/svg/book.svg", remix: "icons/svg/sun.svg" };
 const MAP_REGION_COLORS = { passage: "#2aa7d6", hazard: "#d6332a" };
+// Sopra questa oscurità la luce globale si spegne da sola: le varianti notturne non vanno toccate a mano.
+const MAP_GLOBAL_LIGHT_MAX = 0.3;
 
 /** Titoli dei diari del libro (non di quelli del remix) indicizzati per slug: le pagine che li hanno, in ordine. */
 function bookHeadings() {
@@ -2277,7 +2279,11 @@ async function importMapScene(data, scene, folder, headings, missing) {
     // v14: fog.exploration non esiste più (verrebbe scartato in silenzio), si usa fog.mode.
     tokenVision: data.vision,
     fog: { mode: data.vision ? CONST.FOG_EXPLORATION_MODES.INDIVIDUAL : CONST.FOG_EXPLORATION_MODES.DISABLED },
-    ...(data.darkness != null ? { environment: { darknessLevel: data.darkness } } : {}),
+    // Senza luce globale un PG con visione 0 vede solo i cerchi delle luci, anche di giorno.
+    environment: {
+      ...(data.darkness != null ? { darknessLevel: data.darkness } : {}),
+      globalLight: { enabled: data.vision && (data.globalLight !== false), darkness: { max: MAP_GLOBAL_LIGHT_MAX } }
+    },
     journal: page?.parent.id ?? null, journalEntryPage: page?.id ?? null,
     flags: { [MODULE_ID]: { [MAP_FLAG]: data.key, variants, variant: firstVariant } }
   };
