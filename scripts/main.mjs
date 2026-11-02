@@ -2270,13 +2270,14 @@ async function importMapScene(data, scene, folder, headings, missing) {
   };
   const page = bookPage(data.heading);
   const variants = data.variants ?? [];
+  const firstVariant = variants[0]?.name ?? null;
   const sceneData = {
     name: data.name, width: data.width, height: data.height, padding: 0,
     grid: { type: CONST.GRID_TYPES.SQUARE, ...data.grid },
     tokenVision: data.vision, fog: { exploration: data.vision },
     ...(data.darkness != null ? { environment: { darknessLevel: data.darkness } } : {}),
     journal: page?.parent.id ?? null, journalEntryPage: page?.id ?? null,
-    flags: { [MODULE_ID]: { [MAP_FLAG]: data.key, variants, variant: variants[0]?.name ?? null } }
+    flags: { [MODULE_ID]: { [MAP_FLAG]: data.key, variants, variant: firstVariant } }
   };
   if ( scene ) {
     await scene.update(sceneData);
@@ -2293,8 +2294,8 @@ async function importMapScene(data, scene, folder, headings, missing) {
   // Luci legate a una variante: accese solo con quella (applyMapVariant le scambia).
   const lights = data.levels.flatMap((l, i) => l.lights.map(({ variant, ...light }) => ({
     ...light, elevation: l.elevation.bottom, levels: [levels[i].id],
-    hidden: !!variant && (variant !== variants[0]?.name),
-    flags: { [MODULE_ID]: { [MAP_FLAG]: true, ...(variant ? { variant } : {}) } }
+    hidden: !!variant && (variant !== firstVariant),
+    flags: variant ? { [MODULE_ID]: { ...flags[MODULE_ID], variant } } : flags
   })));
   // I pin stanno sul livello di partenza: senza, Foundry li mostra su tutti i piani.
   const start = data.start ?? 0;
@@ -2407,13 +2408,20 @@ async function applyMapVariant(name, scene = canvas.scene) {
   const variant = scene?.getFlag(MODULE_ID, "variants")?.find(v => v.name === name);
   if ( !variant ) return ui.notifications.warn(`La scena non ha la variante «${name}».`);
   // Luci e buio prima dello sfondo: cambiare lo sfondo ricarica il canvas.
-  const lights = scene.lights.filter(l => l.getFlag(MODULE_ID, "variant"))
-    .map(l => ({ _id: l.id, hidden: l.getFlag(MODULE_ID, "variant") !== name }));
-  if ( lights.length ) await scene.updateEmbeddedDocuments("AmbientLight", lights);
-  await scene.update({
-    ...(variant.darkness != null ? { "environment.darknessLevel": variant.darkness } : {}),
-    [`flags.${MODULE_ID}.variant`]: name
+  // Si toccano solo le luci della variante uscente e di quella entrante: le altre spente a mano restano spente.
+  const previous = scene.getFlag(MODULE_ID, "variant");
+  const lights = scene.lights.contents.flatMap(l => {
+    const own = l.getFlag(MODULE_ID, "variant");
+    const hidden = own !== name;
+    return own && (own === name || own === previous) && (hidden !== l.hidden) ? [{ _id: l.id, hidden }] : [];
   });
+  await Promise.all([
+    lights.length ? scene.updateEmbeddedDocuments("AmbientLight", lights) : null,
+    scene.update({
+      ...(variant.darkness != null ? { "environment.darknessLevel": variant.darkness } : {}),
+      [`flags.${MODULE_ID}.variant`]: name
+    })
+  ]);
   const levels = scene.levels.contents.sort(byElevation);
   const updates = variant.srcs.flatMap((src, i) => levels[i] ? [{ _id: levels[i].id, "background.src": src }] : []);
   await scene.updateEmbeddedDocuments("Level", updates);
