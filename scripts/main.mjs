@@ -2277,8 +2277,9 @@ async function importMapScene(data, scene, folder, headings, missing) {
     name: data.name, width: data.width, height: data.height, padding: 0,
     grid: { type: CONST.GRID_TYPES.SQUARE, ...data.grid },
     // v14: fog.exploration non esiste più (verrebbe scartato in silenzio), si usa fog.mode.
+    // Nebbia condivisa: un solo documento di esplorazione per scena invece di uno per giocatore.
     tokenVision: data.vision,
-    fog: { mode: data.vision ? CONST.FOG_EXPLORATION_MODES.INDIVIDUAL : CONST.FOG_EXPLORATION_MODES.DISABLED },
+    fog: { mode: data.vision ? CONST.FOG_EXPLORATION_MODES.SHARED : CONST.FOG_EXPLORATION_MODES.DISABLED },
     // Senza luce globale un PG con visione 0 vede solo i cerchi delle luci, anche di giorno.
     environment: {
       ...(data.darkness != null ? { darknessLevel: data.darkness } : {}),
@@ -2344,7 +2345,18 @@ async function importMapScene(data, scene, folder, headings, missing) {
     flags: { [MODULE_ID]: { [MAP_FLAG]: true, link: `${data.key}#${r.name}`, to: r.to ?? null,
       disabled: passageState.get(`${data.key}#${r.name}`) ?? !!r.disabled } }
   }));
-  if ( regions.length ) await scene.createEmbeddedDocuments("Region", regions);
+  // I livelli v14 non hanno un buio proprio: una cantina sotto una scena di giorno prenderebbe la luce globale.
+  // Una regione «Adjust Darkness Level» legata al livello alza il buio lì; la soglia della luce globale è
+  // controllata punto per punto (EffectsCanvasGroup#testInsideLight), quindi sopra 0.3 la cantina resta buia.
+  const dark = data.levels.flatMap((l, i) => (l.darkness == null) ? [] : [{
+    name: `Buio: ${l.name}`, color: MAP_REGION_COLORS.hazard,
+    shapes: [{ type: "rectangle", x: 0, y: 0, width: data.width, height: data.height }],
+    levels: [levels[i].id], visibility: CONST.REGION_VISIBILITY.GAMEMASTER,
+    behaviors: [{ type: "adjustDarknessLevel", name: "Buio del livello",
+      system: { mode: foundry.data.regionBehaviors.AdjustDarknessLevelRegionBehaviorType.MODES.OVERRIDE, modifier: l.darkness } }],
+    flags: { [MODULE_ID]: { [MAP_FLAG]: true, darkness: true } }
+  }]);
+  if ( regions.length || dark.length ) await scene.createEmbeddedDocuments("Region", [...regions, ...dark]);
   // Sempre: un reimport può spostare il livello di partenza o eliminare quello vecchio.
   await scene.update({ initialLevel: levels[start].id });
   return scene;
