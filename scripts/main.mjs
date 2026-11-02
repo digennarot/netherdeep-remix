@@ -2175,7 +2175,7 @@ async function createCaelScene() {
     scene = await Scene.implementation.create({
       name: CAEL_SCENE_NAME, folder: folder?.id ?? null, navigation: false, ...size, padding: 0,
       grid: { type: CONST.GRID_TYPES.GRIDLESS, size: 100 },
-      tokenVision: false, fog: { exploration: false },
+      tokenVision: false, fog: { mode: CONST.FOG_EXPLORATION_MODES.DISABLED },
       journal: page.parent.id, journalEntryPage: page.id,
       flags: { [MODULE_ID]: { scene: CAEL_SCENE_FLAG } }
     });
@@ -2274,12 +2274,20 @@ async function importMapScene(data, scene, folder, headings, missing) {
   const sceneData = {
     name: data.name, width: data.width, height: data.height, padding: 0,
     grid: { type: CONST.GRID_TYPES.SQUARE, ...data.grid },
-    tokenVision: data.vision, fog: { exploration: data.vision },
+    // v14: fog.exploration non esiste più (verrebbe scartato in silenzio), si usa fog.mode.
+    tokenVision: data.vision,
+    fog: { mode: data.vision ? CONST.FOG_EXPLORATION_MODES.INDIVIDUAL : CONST.FOG_EXPLORATION_MODES.DISABLED },
     ...(data.darkness != null ? { environment: { darknessLevel: data.darkness } } : {}),
     journal: page?.parent.id ?? null, journalEntryPage: page?.id ?? null,
     flags: { [MODULE_ID]: { [MAP_FLAG]: data.key, variants, variant: firstVariant } }
   };
+  // Passaggi che il GM ha già attivato o spento: le regioni rinascono, il loro stato no.
+  const passageState = new Map();
   if ( scene ) {
+    for ( const region of scene.regions ) {
+      const behavior = region.behaviors.find(b => b.getFlag(MODULE_ID, MAP_FLAG));
+      if ( behavior ) passageState.set(region.getFlag(MODULE_ID, "link"), behavior.disabled);
+    }
     await scene.update(sceneData);
     for ( const type of ["Wall", "AmbientLight", "Note", "Tile", "Region"] ) {
       const ids = scene.getEmbeddedCollection(type).filter(d => d.getFlag(MODULE_ID, MAP_FLAG)).map(d => d.id);
@@ -2327,18 +2335,21 @@ async function importMapScene(data, scene, folder, headings, missing) {
     name: r.name, color: MAP_REGION_COLORS[r.kind] ?? MAP_REGION_COLORS.passage,
     shapes: [{ type: "rectangle", x: r.x, y: r.y, width: r.width, height: r.height }],
     levels: [levels[start].id], visibility: CONST.REGION_VISIBILITY.GAMEMASTER,
-    flags: { [MODULE_ID]: { [MAP_FLAG]: true, link: `${data.key}#${r.name}`, to: r.to ?? null, disabled: !!r.disabled } }
+    flags: { [MODULE_ID]: { [MAP_FLAG]: true, link: `${data.key}#${r.name}`, to: r.to ?? null,
+      disabled: passageState.get(`${data.key}#${r.name}`) ?? !!r.disabled } }
   }));
   if ( regions.length ) await scene.createEmbeddedDocuments("Region", regions);
-  if ( data.start ) await scene.update({ initialLevel: levels[data.start].id });
+  // Sempre: un reimport può spostare il livello di partenza o eliminare quello vecchio.
+  await scene.update({ initialLevel: levels[start].id });
   return scene;
 }
 
 /**
  * Collega i passaggi delle battle map (regione «to» = chiave scena#nome) con un comportamento Teleport Token.
- * Si rifà su tutte le scene a ogni import: un capitolo reimportato ricrea le sue regioni, e i passaggi che
- * puntavano lì vanno aggiornati. Il teletrasporto chiede conferma a chi muove (choice) senza svelare la meta;
- * quelli che il libro fa scattare solo in certi momenti nascono disattivati e li attiva il GM.
+ * Si controlla su tutte le scene a ogni import: un capitolo reimportato ricrea le sue regioni, e i passaggi che
+ * puntavano lì vanno aggiornati. Si cambia solo la meta: se il GM ha attivato o spento un passaggio, resta così.
+ * Il teletrasporto chiede conferma a chi muove (choice) senza svelare la meta; quelli che il libro fa scattare
+ * solo in certi momenti nascono disattivati e li attiva il GM.
  * @returns {Promise<string[]>}  Mete non ancora importate.
  */
 async function linkMapPassages() {
@@ -2349,14 +2360,20 @@ async function linkMapPassages() {
   for ( const region of regions ) {
     const to = region.getFlag(MODULE_ID, "to");
     if ( !to ) continue;
-    const old = region.behaviors.filter(b => b.getFlag(MODULE_ID, MAP_FLAG)).map(b => b.id);
-    if ( old.length ) await region.deleteEmbeddedDocuments("RegionBehavior", old);
+    const [behavior, ...extra] = region.behaviors.filter(b => b.getFlag(MODULE_ID, MAP_FLAG));
+    if ( extra.length ) await region.deleteEmbeddedDocuments("RegionBehavior", extra.map(b => b.id));
     const target = byLink.get(to);
     if ( !target ) {
       missing.push(to);
+      if ( behavior ) await behavior.delete();
       continue;
     }
-    await region.createEmbeddedDocuments("RegionBehavior", [{
+    // Le mete nella stessa scena sono salvate come uuid relativi.
+    const destinations = [...(behavior?.system.destinations ?? [])]
+      .map(uuid => foundry.utils.parseUuid(uuid, { relative: behavior })?.uuid);
+    if ( behavior && (destinations.length === 1) && (destinations[0] === target.uuid) ) continue;
+    if ( behavior ) await behavior.update({ "system.destinations": [target.uuid] });
+    else await region.createEmbeddedDocuments("RegionBehavior", [{
       type: "teleportToken", name: "Passaggio", disabled: !!region.getFlag(MODULE_ID, "disabled"),
       system: { destinations: [target.uuid], choice: true, revealed: false },
       flags: { [MODULE_ID]: { [MAP_FLAG]: true } }
@@ -2541,6 +2558,7 @@ function homebrewActorData(m, base) {
 /**
  * Crea (o rifà) gli attori dei mostri homebrew del pacchetto: i nuovi mostri del Netherdeep e gli Alyxian rivisti.
  * Gli Alyxian del libro restano intatti: da loro si prendono solo ritratto e token.
+ * Un attore già creato si aggiorna sul posto (stesso id): i token in scena e i link @UUID restano validi.
  */
 async function importHomebrewActors() {
   if ( !game.user.isGM ) return ui.notifications.warn("Solo il GM può creare gli attori.");
@@ -2550,10 +2568,19 @@ async function importHomebrewActors() {
   for ( const m of catalog ) {
     const base = m.base ? game.actors.find(a => (a.name === m.base) && !a.getFlag(MODULE_ID, HOMEBREW_FLAG)) : null;
     if ( m.base && !base ) ui.notifications.warn(`Non trovo l'attore del libro «${m.base}»: «${m.name}» resta senza ritratto.`);
-    const data = { ...homebrewActorData(m, base), folder: folder.id };
-    data.items = m.items.map(entry => homebrewItem(entry, data.img));
-    await game.actors.find(a => a.getFlag(MODULE_ID, HOMEBREW_FLAG) === m.key)?.delete();
-    created.push(await Actor.implementation.create(data));
+    const { flags, ...data } = homebrewActorData(m, base);
+    const items = m.items.map(entry => homebrewItem(entry, data.img));
+    const actor = game.actors.find(a => a.getFlag(MODULE_ID, HOMEBREW_FLAG) === m.key);
+    if ( !actor ) {
+      created.push(await Actor.implementation.create({ ...data, flags, folder: folder.id, items }));
+      continue;
+    }
+    // system e token si sostituiscono interi (il catalogo è la fonte); cartella, permessi e altri flag restano.
+    const { type, ...changes } = data;
+    await actor.update(changes, { recursive: false });
+    await actor.deleteEmbeddedDocuments("Item", actor.items.map(i => i.id));
+    await actor.createEmbeddedDocuments("Item", items);
+    created.push(actor);
   }
   ui.notifications.info(`Mostri homebrew: ${created.length} attori nella cartella «${folder.name}».`);
   return created;
