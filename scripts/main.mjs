@@ -2222,6 +2222,7 @@ async function lockScene(locked, scene = canvas.scene) {
 // rilanciando si rifà solo quello, i ritocchi a mano (token, muri disegnati, note tue) restano.
 const MAP_FLAG = "map";
 const MAP_PIN_ICONS = { book: "icons/svg/book.svg", remix: "icons/svg/sun.svg" };
+const MAP_REGION_COLORS = { passage: "#2aa7d6", hazard: "#d6332a" };
 
 /** Titoli dei diari del libro (non di quelli del remix) indicizzati per slug: le pagine che li hanno, in ordine. */
 function bookHeadings() {
@@ -2279,7 +2280,7 @@ async function importMapScene(data, scene, folder, headings, missing) {
   };
   if ( scene ) {
     await scene.update(sceneData);
-    for ( const type of ["Wall", "AmbientLight", "Note", "Tile"] ) {
+    for ( const type of ["Wall", "AmbientLight", "Note", "Tile", "Region"] ) {
       const ids = scene.getEmbeddedCollection(type).filter(d => d.getFlag(MODULE_ID, MAP_FLAG)).map(d => d.id);
       if ( ids.length ) await scene.deleteEmbeddedDocuments(type, ids);
     }
@@ -2317,8 +2318,47 @@ async function importMapScene(data, scene, folder, headings, missing) {
     occlusion: { modes: roof ? [CONST.OCCLUSION_MODES.FADE] : [] }, flags
   }));
   if ( tiles.length ) await scene.createEmbeddedDocuments("Tile", tiles);
+  // Regioni solo per il GM: i passaggi verso un'altra scena li collega linkMapPassages, i pericoli sono segnati e basta.
+  const regions = (data.regions ?? []).map(r => ({
+    name: r.name, color: MAP_REGION_COLORS[r.kind] ?? MAP_REGION_COLORS.passage,
+    shapes: [{ type: "rectangle", x: r.x, y: r.y, width: r.width, height: r.height }],
+    levels: [levels[start].id], visibility: CONST.REGION_VISIBILITY.GAMEMASTER,
+    flags: { [MODULE_ID]: { [MAP_FLAG]: true, link: `${data.key}#${r.name}`, to: r.to ?? null, disabled: !!r.disabled } }
+  }));
+  if ( regions.length ) await scene.createEmbeddedDocuments("Region", regions);
   if ( data.start ) await scene.update({ initialLevel: levels[data.start].id });
   return scene;
+}
+
+/**
+ * Collega i passaggi delle battle map (regione «to» = chiave scena#nome) con un comportamento Teleport Token.
+ * Si rifà su tutte le scene a ogni import: un capitolo reimportato ricrea le sue regioni, e i passaggi che
+ * puntavano lì vanno aggiornati. Il teletrasporto chiede conferma a chi muove (choice) senza svelare la meta;
+ * quelli che il libro fa scattare solo in certi momenti nascono disattivati e li attiva il GM.
+ * @returns {Promise<string[]>}  Mete non ancora importate.
+ */
+async function linkMapPassages() {
+  const regions = game.scenes.filter(s => s.getFlag(MODULE_ID, MAP_FLAG)).flatMap(s => s.regions.contents)
+    .filter(r => r.getFlag(MODULE_ID, MAP_FLAG));
+  const byLink = new Map(regions.map(r => [r.getFlag(MODULE_ID, "link"), r]));
+  const missing = [];
+  for ( const region of regions ) {
+    const to = region.getFlag(MODULE_ID, "to");
+    if ( !to ) continue;
+    const old = region.behaviors.filter(b => b.getFlag(MODULE_ID, MAP_FLAG)).map(b => b.id);
+    if ( old.length ) await region.deleteEmbeddedDocuments("RegionBehavior", old);
+    const target = byLink.get(to);
+    if ( !target ) {
+      missing.push(to);
+      continue;
+    }
+    await region.createEmbeddedDocuments("RegionBehavior", [{
+      type: "teleportToken", name: "Passaggio", disabled: !!region.getFlag(MODULE_ID, "disabled"),
+      system: { destinations: [target.uuid], choice: true, revealed: false },
+      flags: { [MODULE_ID]: { [MAP_FLAG]: true } }
+    }]);
+  }
+  return missing;
 }
 
 /**
@@ -2339,7 +2379,7 @@ async function importMapScenes(chapter) {
   const ok = await foundry.applications.api.DialogV2.confirm({
     window: { title: `Mappe del capitolo ${chapter}` },
     content: `<p>Creo <strong>${todo.length - redo}</strong> scene nuove${redo
-      ? ` e rifaccio sfondi, muri, luci e pin di <strong>${redo}</strong> già importate (token e aggiunte tue restano)` : ""}.</p>
+      ? ` e rifaccio sfondi, muri, luci, pin e regioni di <strong>${redo}</strong> già importate (token e aggiunte tue restano)` : ""}.</p>
       ${locked.length ? `<p>Salto le scene bloccate: ${locked.map(d => esc(d.name)).join(", ")}.</p>` : ""}`
   });
   if ( !ok ) return;
@@ -2348,6 +2388,8 @@ async function importMapScenes(chapter) {
   const done = [];
   for ( const data of todo ) done.push(await importMapScene(data, existing.get(data.key), folder, headings, missing));
   if ( missing.size ) ui.notifications.warn(`Titoli non trovati nei diari: ${[...missing].join("; ")}`);
+  const unlinked = await linkMapPassages();
+  if ( unlinked.length ) ui.notifications.info(`Passaggi da collegare quando importi la scena di arrivo: ${unlinked.join("; ")}`);
   ui.notifications.info(`Capitolo ${chapter}: ${done.length} scene pronte nella cartella «${folder?.name ?? "senza cartella"}».`);
   return done;
 }
